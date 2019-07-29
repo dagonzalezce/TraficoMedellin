@@ -7,4 +7,6 @@ case class Bus() extends Vehiculo{
        Vehiculo.letrasAleatorias(3)+
                     Vehiculo.numerosAleatorios(3)
 }
+
+
 }
