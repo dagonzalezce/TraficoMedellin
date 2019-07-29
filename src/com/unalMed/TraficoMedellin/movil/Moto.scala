@@ -1,4 +1,4 @@
-package com.unalMed.TraficoMedellin.vehiculos
+package com.unalMed.TraficoMedellin.movil
 
 case class Moto() extends Vehiculo{
   val placa: String= generarPlacaAleatoria()

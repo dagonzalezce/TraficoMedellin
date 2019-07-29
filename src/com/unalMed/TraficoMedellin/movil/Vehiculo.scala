@@ -1,4 +1,4 @@
-package com.unalMed.TraficoMedellin.vehiculos
+package com.unalMed.TraficoMedellin.movil
 
 import scala.util.Random
 
