@@ -1,6 +1,8 @@
 package com.unalMed.TraficoMedellin.movil
 
-case class Moto() extends Vehiculo{
+import com.unalMed.TraficoMedellin.vias._
+
+case class Moto(inO: Interseccion, inD: Interseccion) extends Vehiculo(inO, inD){
   val placa: String= generarPlacaAleatoria()
    
   def generarPlacaAleatoria() : String ={

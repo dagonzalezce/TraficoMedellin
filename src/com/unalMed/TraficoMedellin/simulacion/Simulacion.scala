@@ -20,6 +20,7 @@ object Simulacion extends Runnable{
   val proporcionCamiones: Double= ArchivosJson.parametros.proporciones.camiones
   val proporcionMotoTaxis: Double= ArchivosJson.parametros.proporciones.motoTaxis
   
+  
   val niquia = new Interseccion(300, 12000, Some("Niquia"))
   val lauraAuto = new Interseccion(2400, 11400, Some("M. Laura Auto"))
   val lauraReg = new Interseccion(2400, 12600, Some("M. Laura Reg"))
@@ -62,6 +63,7 @@ object Simulacion extends Runnable{
   val gu80 = new Interseccion(19500, 12000, Some("Guay 80"))
   val _65_80 = new Interseccion(19500, 10500, Some("65 con 30"))
   val gu_37S = new Interseccion(21000, 12000, Some("Guay con 37S"))
+  val intersecciones = crearIntersecciones()
   val vias = crearVias()
   val vehiculos = crearVehiculos()
   var t=0
@@ -85,6 +87,15 @@ object Simulacion extends Runnable{
     for(i <- 0 to size-1) array(i)= Vehiculo()
     array
   }
+  
+  def crearIntersecciones() : List[Interseccion] = {
+    List(niquia,lauraAuto,lauraReg ,ptoCero,mino,villa,ig65,robledo,colReg,
+        colFerr, col65, col80,juanOr,maca ,expo,reg30, monte,agua ,viva , mayor,
+        ferrCol , ferrJuan , sanDiego , premium ,pp, santafe, pqEnv ,juan65, juan80,
+        _33_65 , bule , gema , _30_65, _30_70 , _30_80, bol65 ,gu10 ,terminal, gu30 ,
+        gu80 ,_65_80 , gu_37S )
+  }
+  
   
   def crearVias() : ArrayBuffer[Via] ={
     ArrayBuffer(
