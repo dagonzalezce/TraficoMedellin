@@ -5,8 +5,7 @@ import Math.cos
 import Math.sin
 
 trait MovimientoUniforme {
-  
-  
+    
   def aumentaPosicion(p: Punto,veloc: Velocidad, dt: Int): Punto ={
     
     val px = (p.x+(veloc.magnitud * Math.cos(veloc.angulo.angulo) * dt)).toInt
