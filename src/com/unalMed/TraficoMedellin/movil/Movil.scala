@@ -3,9 +3,11 @@ package com.unalMed.TraficoMedellin.movil
 import com.unalMed.TraficoMedellin.geometria._
 
 abstract class Movil ( private val _pos: Punto, private val _vel: Velocidad){
+  //Constructor
   private var _posicion = new Punto( _pos.x, _pos.y )
   private var _velocidad = new Velocidad( _vel.magnitud, new Angulo( _vel.angulo.angulo ) )
   
+  //Getter y setters
   def posicion = _posicion
   def posicion_= (posicion: Punto): Unit = { _posicion.x = posicion.x
                                              _posicion.y = posicion.y} 
@@ -15,8 +17,10 @@ abstract class Movil ( private val _pos: Punto, private val _vel: Velocidad){
   def velocidad_= (velocidad: Velocidad): Unit = { _velocidad.angulo = velocidad.angulo
                                                    _velocidad.magnitud = velocidad.magnitud }
   
-  def mover: Punto 
+  //Metodo declarado para mover el objeto movil en una franja dt
+  def mover( pos: Punto, vel: Velocidad ): Unit 
   
+  //Devuelve la direccion del vehiculo
   def anguloDireccion : Angulo = _velocidad.angulo
   
 } 

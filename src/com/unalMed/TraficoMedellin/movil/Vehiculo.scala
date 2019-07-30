@@ -3,12 +3,16 @@ package com.unalMed.TraficoMedellin.movil
 import scala.util.Random
 import com.unalMed.TraficoMedellin.vias._
 import com.unalMed.TraficoMedellin.simulacion._
+import com.unalMed.TraficoMedellin.geometria._
 
-abstract class Vehiculo (val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion) 
-                extends Movil with MovimientoUniforme{
-  val placa: String
+abstract class Vehiculo ( val po : Punto, val ve: Velocidad , val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion) 
+                extends Movil(po,ve) with MovimientoUniforme{
+  
+  val placa: String  
 }
 
+
+/*
 object Vehiculo{
   def apply(): Vehiculo = {
     val r = Random.nextDouble()
@@ -50,5 +54,7 @@ object Vehiculo{
     na
   }
 }
+
+*/
   
   
