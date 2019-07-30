@@ -5,5 +5,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lift-json_2.12-3.3.0.jar"/>
 	<classpathentry kind="lib" path="paranamer-2.8.jar"/>
+	<classpathentry kind="lib" path="jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="graph-core_2.12-1.12.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
