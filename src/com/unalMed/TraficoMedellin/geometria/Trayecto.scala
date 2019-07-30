@@ -18,7 +18,7 @@ class Trayecto (val origen: Interseccion, val destino: Interseccion, val camino:
 }
 
 object Trayecto {
-  
+  /*
   def apply(): Trayecto = {
     
     val a = scala.util.Random.nextInt(Simulacion.listaInterseccion.length) // tendría que crear una lista de intersecciones en Simulacion
@@ -33,5 +33,5 @@ object Trayecto {
     
     
   }
-  
+  */
 }
