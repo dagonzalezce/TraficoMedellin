@@ -18,7 +18,7 @@ abstract class Movil ( private val _pos: Punto, private val _vel: Velocidad){
                                                    _velocidad.magnitud = velocidad.magnitud }
   
   //Metodo declarado para mover el objeto movil en una franja dt
-  def mover( pos: Punto, vel: Velocidad ): Unit 
+  def mover: Unit 
   
   //Devuelve la direccion del vehiculo
   def anguloDireccion : Angulo = _velocidad.angulo

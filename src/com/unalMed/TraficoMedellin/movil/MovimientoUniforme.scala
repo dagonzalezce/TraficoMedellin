@@ -10,7 +10,7 @@ trait MovimientoUniforme {
   var _posicion : Punto
   var _velocidad : Velocidad
   
-  def moverUniforme : Unit = {
+  def mover : Unit = {
     _posicion.x = ( _posicion.x.toDouble + _velocidad.magnitud * math.cos( _velocidad.angulo.angulo ) ).toInt
     _posicion.y = ( _posicion.y.toDouble + _velocidad.magnitud + math.sin( _velocidad.angulo.angulo ) ).toInt
   }
