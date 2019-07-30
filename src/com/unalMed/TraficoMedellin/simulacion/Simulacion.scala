@@ -2,6 +2,8 @@ package com.unalMed.TraficoMedellin.simulacion
 
 import com.unalMed.TraficoMedellin.vias._
 import com.unalMed.TraficoMedellin.movil._
+import com.unalMed.TraficoMedellin.geometria._
+import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 object Simulacion extends Runnable{
@@ -63,15 +65,19 @@ object Simulacion extends Runnable{
   val vias = crearVias()
   val vehiculos = crearVehiculos()
   var t=0
+  
+  GrafoVia.construir(vias)
 
   def run(){
     while (true) {
+      /*
       vehiculos.foreach(_.mover(dt))
       t += dt
       Grafico.graficarVehiculos(vehiculos)
       Thread.sleep(tRefresh)
+			*/
+     }
 }
-  }
   
   def crearVehiculos() : Array[Vehiculo] = {
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
@@ -80,8 +86,8 @@ object Simulacion extends Runnable{
     array
   }
   
-  def crearVias() : Array[Via] ={
-    Array(
+  def crearVias() : ArrayBuffer[Via] ={
+    ArrayBuffer(
     new Via(niquia, lauraAuto, 80, TipoVia("Carrera"), Sentido.dobleVia, "64C", "Auto Norte"),
     new Via(niquia, lauraReg, 80, TipoVia("Carrera"), Sentido.dobleVia, "62", "Regional"),
     new Via(lauraAuto, lauraReg, 60, TipoVia("Calle"), Sentido.dobleVia, "94", "Pte Madre Laura"),

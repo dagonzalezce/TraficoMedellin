@@ -3,8 +3,7 @@ package com.unalMed.TraficoMedellin.movil
 import scala.util.Random
 import com.unalMed.TraficoMedellin.simulacion._
 
-
-abstract class Vehiculo {
+abstract class Vehiculo extends Movil with MovimientoUniforme{
   val placa: String
 }
 

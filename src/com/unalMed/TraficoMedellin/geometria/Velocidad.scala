@@ -10,3 +10,13 @@ class Velocidad( private var _magnitud : Int, private var _angulo : Angulo  ) {
   def angulo = _angulo
   def angulo_= (angulo: Angulo): Unit = { _angulo.angulo_=(angulo.angulo) }
 }
+
+object Velocidad{
+  def aMetrosPorSegundo(magnitudEnKmPorHora : Int){
+      magnitudEnKmPorHora/3.6
+  }
+  
+  def aKilometrosPorHora(magnitudEnMetrosPorSegundo : Int){
+      magnitudEnMetrosPorSegundo*3.6
+  }
+}
