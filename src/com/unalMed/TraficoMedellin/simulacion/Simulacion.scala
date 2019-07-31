@@ -82,19 +82,30 @@ object Simulacion extends Runnable{
   var g = Grafico
   g.graficarVias(vias.toArray)
   
+  //mientras montan le run
+  def rundeprueba(){
+    Grafico.graficarVehiculos( Array(new Carro( bol65, terminal , new Velocidad( 1, new Angulo(90))),
+                                     new MotoTaxi( niquia, _65_80, new Velocidad( 1, new Angulo(90))),
+                                     new Camion( gu30, gu_37S, new Velocidad( 1, new Angulo(90))),
+                                     new Moto( pqEnv, reg30, new Velocidad( 1, new Angulo(90))),
+                                     new Bus( pp, ferrCol, new Velocidad( 1, new Angulo(90)))    
+                             ))
+  }
 
   
   def run(){
+    /*
+    var dt = 1
+    var t = 0
     while (true) {
-      
-      /*
       vehiculos.foreach(_.mover(dt))
       t += dt
       Grafico.graficarVehiculos(vehiculos)
       Thread.sleep(tRefresh)
-			*/
+			
      }
-}
+     */
+  }
   /*
   def crearVehiculos() : Array[Vehiculo] = {
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
@@ -102,7 +113,6 @@ object Simulacion extends Runnable{
     for(i <- 0 to size-1) array(i)= Vehiculo()
     array
   }
-  * 
   */
   
   def crearIntersecciones() : List[Interseccion] = {

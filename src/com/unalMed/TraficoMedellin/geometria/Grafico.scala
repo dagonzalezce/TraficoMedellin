@@ -11,6 +11,9 @@ import org.jfree.chart.renderer.xy._
 import java.awt.BasicStroke
 import java.awt.geom.Line2D
 import org.jfree.chart.annotations.XYTextAnnotation
+import scala.collection.mutable.ArrayBuffer
+import scala.util.Random
+import com.unalMed.TraficoMedellin.simulacion.Simulacion
 
 
 /*
@@ -52,14 +55,22 @@ object Grafico {
     false // Scroll panel
   )
   
+  val s = Simulacion
   
   frame.addKeyListener( new KeyListener{
                            override def keyPressed( e : KeyEvent ): Unit = {
-                             if( e.getKeyCode ==  KeyEvent.VK_F5 )
-                               println("Presionado F5")
-                            if( e.getKeyCode ==  KeyEvent.VK_F6 )
-                               println("Presionado F6")
-                           }
+                             if( e.getKeyCode ==  KeyEvent.VK_F5 ){
+                               println("Empezar simulacion")
+                               val empiezanCarros = _numeroVias + 1
+                               while( _dataset.getSeriesCount != _numeroVias )
+                                 _dataset.removeSeries( empiezanCarros )
+                               s.rundeprueba
+                               //crearle estado a la simulacion
+                             }
+                             if( e.getKeyCode ==  KeyEvent.VK_F6 )
+                               println("Pausar simulacion")
+                               //s.pause dt = 0
+                             }
                            override def keyTyped( e : KeyEvent ): Unit = {
                              
                            }
@@ -72,7 +83,7 @@ object Grafico {
   frame.setAlwaysOnTop(true) // la ventana siempre arriba de aplicaciones
   frame.pack() // Acomoda la ventana a la grafica
   frame.setVisible(true) // Siempre visible
-  frame.setResizable(false) // Que no se le pueda cambiar el tamano
+  frame.setResizable(true) // Que no se le pueda cambiar el tamano
   frame.getBounds //Rectangle
   
 
@@ -101,9 +112,28 @@ object Grafico {
     return
   }
   
-  /*
+  
   def graficarVehiculos( vehiculos: Array[com.unalMed.TraficoMedellin.movil.Vehiculo] ): Unit = {
-    vehiculos.foreach( vehiculo => this._vehiculos.add( vehiculo. , y) )
+    var numCarroActual = _numeroVias + 1
+    var listaDestinos = vehiculos.map(_.interseccionDestino)
+    var listaColores : ArrayBuffer[java.awt.Color] = ArrayBuffer()
+     listaDestinos.foreach( destino => listaColores.append(java.awt.Color.getHSBColor(Random.nextFloat()*255,
+        Random.nextFloat()*255,
+        Random.nextFloat()*255) ) )
+    vehiculos.foreach( vehiculo => {
+  	  var s = new XYSeries(numCarroActual)
+  	  s.add(vehiculo.posicion.x, vehiculo.posicion.y)
+  	  _dataset.addSeries(s)
+  	  r.setSeriesPaint( numCarroActual, listaColores.apply(listaDestinos.indexOf(vehiculo.interseccionDestino) ) )
+  	  vehiculo match { 
+  	    case Carro(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createDiagonalCross(7, 1f)) // primer arg es tamano 2 es grosor
+  	    case Camion(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createDiamond(7)) // primer argumento es el tamano
+  	    case Bus(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createDownTriangle(7)) // primer argumento es el tamano
+  	    case Moto(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createUpTriangle(7))
+  	    case MotoTaxi(_,_,_) => //Default figura
+  	  }
+  	  numCarroActual = numCarroActual + 1
+    })
   }
-  */
+  
 }
