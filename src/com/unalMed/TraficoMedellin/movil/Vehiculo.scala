@@ -14,12 +14,6 @@ abstract class Vehiculo ( val interseccionOrigen: Interseccion, val interseccion
 
 object Vehiculo{
   def apply(): Vehiculo = {
-    val i1= Simulacion.proporcionCarros
-    val i2= i1+Simulacion.proporcionMotos
-    val i3= i2+Simulacion.proporcionBuses
-    val i4= i3+Simulacion.proporcionCamiones
-    val i5= i4+Simulacion.proporcionMotoTaxis
-    
     val interseccionesAleatorias = Random.shuffle(Simulacion.intersecciones)
     val inO= interseccionesAleatorias(0)
     val inD= interseccionesAleatorias(1)
@@ -27,10 +21,11 @@ object Vehiculo{
     // Por cambiar
     var v: Velocidad = new Velocidad( 1, new Angulo(90) ) // Valor mientras mayra implement ael grafo y pensamos velocidad
     
-    
-    
-    var veh: Vehiculo= null
-    Random.nextInt(5) match {
+    _generarRandomProporciones( Simulacion.proporcionCarros,
+        Simulacion.proporcionCamiones,
+        Simulacion.proporcionBuses,
+        Simulacion.proporcionMotos,
+        Simulacion.proporcionMotoTaxis) match {
       case 0 => new Carro( inO, inD, v )
       case 1 => new Camion( inO, inD, v )
       case 2 => new Bus( inO, inD, v )
@@ -38,6 +33,7 @@ object Vehiculo{
       case 4 => new MotoTaxi( inO, inD, v ) 
     }
   }
+  
   
   def letrasAleatorias(n: Int)={
     var letras="ABCDEFGHIJKLMNOPQRSTUVWXYZ" 
@@ -50,6 +46,22 @@ object Vehiculo{
     var na=""
     1 to n foreach {x => na+= Random.nextInt(10).toString}
     na
+  }
+  
+  //Devuelve un entero de 1 a 5 dependiendo de las proporciones
+  private def _generarRandomProporciones( pCarro : Double, pCamion: Double, pBus: Double, pMoto: Double, pMotoTaxi: Double  ): Int = {
+    val r : Double = Random.nextDouble()
+    if( r <= pCarro ){ //Caso carro
+      return 0
+    }else if(r<=pCarro + pCamion ){ //Caso Camion
+      return 1
+    }else if(r<= pCarro + pCamion + pBus){ //Caso Bus
+      return 2
+    }else if(r<= pCarro + pCamion+ pBus + pMoto){ //Caso Moto
+      return 3
+    }else {  //Caso MotoTaxi
+      return 4
+    }      
   }
 }
 
