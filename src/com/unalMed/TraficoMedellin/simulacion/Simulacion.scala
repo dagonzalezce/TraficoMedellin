@@ -16,12 +16,19 @@ object Simulacion extends Runnable{
   val maxVehiculos: Int= ArchivosJson.parametros.vehiculos.maximo
   val minVelocidad: Int= ArchivosJson.parametros.velocidad.minimo
   val maxVelocidad: Int= ArchivosJson.parametros.velocidad.maximo
+  
+  
   val proporcionCarros: Double= ArchivosJson.parametros.proporciones.carros
   val proporcionMotos: Double= ArchivosJson.parametros.proporciones.motos
   val proporcionBuses: Double= ArchivosJson.parametros.proporciones.buses
   val proporcionCamiones: Double= ArchivosJson.parametros.proporciones.camiones
   val proporcionMotoTaxis: Double= ArchivosJson.parametros.proporciones.motoTaxis
   */
+  val proporcionCarros: Double= 10
+  val proporcionMotos: Double= 10
+  val proporcionBuses: Double= 10
+  val proporcionCamiones: Double= 10
+  val proporcionMotoTaxis: Double= 10
   
   val niquia = new Interseccion(300, 12000, Some("Niquia"))
   val lauraAuto = new Interseccion(2400, 11400, Some("M. Laura Auto"))

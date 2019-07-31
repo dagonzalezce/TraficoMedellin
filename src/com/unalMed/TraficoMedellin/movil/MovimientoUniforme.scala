@@ -24,7 +24,7 @@ trait MovimientoUniforme {
    *  x = x0 - |V|*cos(V angulo en radianes) 
    *  y = y0 - |V|*sin(V angulo en radianes)
    */
-  def mover : Unit = {
+  def mover: Unit = {
     _posicion.x = ( _posicion.x.toDouble + _velocidad.magnitud * math.cos( _velocidad.angulo.angulo.toRadians ) ).toInt
     _posicion.y = ( _posicion.y.toDouble + _velocidad.magnitud + math.sin( _velocidad.angulo.angulo.toRadians ) ).toInt
   }
