@@ -1,3 +1,4 @@
+/*
 package com.unalMed.TraficoMedellin.movil
 
 import com.unalMed.TraficoMedellin.vias._
@@ -9,3 +10,4 @@ case class Camion(inO: Interseccion, inD: Interseccion) extends Vehiculo(inO, in
        "R"+Vehiculo.numerosAleatorios(5)
   }
 }
+*/

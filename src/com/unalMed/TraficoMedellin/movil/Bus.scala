@@ -1,3 +1,4 @@
+/*
 package com.unalMed.TraficoMedellin.movil
 
 import com.unalMed.TraficoMedellin.vias._
@@ -12,3 +13,4 @@ case class Bus(inO: Interseccion, inD: Interseccion) extends Vehiculo(inO, inD){
 
 
 }
+*/

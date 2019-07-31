@@ -6,8 +6,10 @@ import com.unalMed.TraficoMedellin.geometria._
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
+import com.unalMed.TraficoMedellin.geometria.Grafico
+
 object Simulacion extends Runnable{
-  
+  /*
   val dt: Int= ArchivosJson.parametros.dt
   val tRefresh: Int= ArchivosJson.parametros.tRefresh
   val minVehiculos: Int= ArchivosJson.parametros.vehiculos.minimo
@@ -19,7 +21,7 @@ object Simulacion extends Runnable{
   val proporcionBuses: Double= ArchivosJson.parametros.proporciones.buses
   val proporcionCamiones: Double= ArchivosJson.parametros.proporciones.camiones
   val proporcionMotoTaxis: Double= ArchivosJson.parametros.proporciones.motoTaxis
-  
+  */
   
   val niquia = new Interseccion(300, 12000, Some("Niquia"))
   val lauraAuto = new Interseccion(2400, 11400, Some("M. Laura Auto"))
@@ -65,13 +67,19 @@ object Simulacion extends Runnable{
   val gu_37S = new Interseccion(21000, 12000, Some("Guay con 37S"))
   val intersecciones = crearIntersecciones()
   val vias = crearVias()
-  val vehiculos = crearVehiculos()
+  //val vehiculos = crearVehiculos()
   var t=0
   
   GrafoVia.construir(vias)
+  
+  var g = Grafico
+  g.graficarVias(vias.toArray)
+  
 
+  
   def run(){
     while (true) {
+      
       /*
       vehiculos.foreach(_.mover(dt))
       t += dt
@@ -80,13 +88,15 @@ object Simulacion extends Runnable{
 			*/
      }
 }
-  
+  /*
   def crearVehiculos() : Array[Vehiculo] = {
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
     val array= new Array[Vehiculo](size)
     for(i <- 0 to size-1) array(i)= Vehiculo()
     array
   }
+  * 
+  */
   
   def crearIntersecciones() : List[Interseccion] = {
     List(niquia,lauraAuto,lauraReg ,ptoCero,mino,villa,ig65,robledo,colReg,

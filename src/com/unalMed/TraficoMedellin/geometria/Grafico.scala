@@ -10,6 +10,8 @@ import java.awt.Color._
 import org.jfree.chart.renderer.xy._
 import java.awt.BasicStroke
 import java.awt.geom.Line2D
+import org.jfree.chart.annotations.XYTextAnnotation
+
 
 /*
  * Clase que maneja la interfaz grafica de la aplicacion provee los metodos 
@@ -29,7 +31,7 @@ object Grafico {
     "", // Axis x
     "", // Axis y
     _dataset, //XYDataset
-    org.jfree.chart.plot.PlotOrientation.HORIZONTAL,
+    org.jfree.chart.plot.PlotOrientation.VERTICAL, // Orientacion de la grafica
     false, //legends
     false, //tooltips
     false  //url
@@ -92,9 +94,10 @@ object Grafico {
                           r.setSeriesShapesVisible(_viaActual, false) //Quita los cuadrados en las esquinas
                           r.setSeriesLinesVisible(_viaActual, true) // Mostrar lineas
                           _viaActual=_viaActual + 1 // Aumentar el numero de la via
-                          s.clear()  
                         } )
-    //Por hacer, agregar los nombres de las intersecciones
+    //Agregar el nombre de las intersecciones
+    (vias.map(_.puntoInicio)++vias.map(_.puntoFinal)).distinct.foreach( inter =>
+        sP.getXYPlot.addAnnotation( new XYTextAnnotation( inter.nombre.getOrElse(""), inter.x, inter.y  )))
     return
   }
   

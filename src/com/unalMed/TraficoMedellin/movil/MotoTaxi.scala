@@ -1,3 +1,4 @@
+/*
 package com.unalMed.TraficoMedellin.movil
 
 import com.unalMed.TraficoMedellin.vias._
@@ -10,3 +11,4 @@ case class MotoTaxi(inO: Interseccion, inD: Interseccion) extends Vehiculo(inO, 
                     Vehiculo.letrasAleatorias(3)
   }
 }
+*/

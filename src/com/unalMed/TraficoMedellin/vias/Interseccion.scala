@@ -3,7 +3,7 @@ import com.unalMed.TraficoMedellin.geometria.Punto
 
 
 //Case class?
-class Interseccion( cx: Int , cy: Int, nombre : Option[String] = None ) extends Punto( cx, cy) {
+class Interseccion( cx: Int , cy: Int, val nombre : Option[String] = None ) extends Punto( cx, cy) {
 
   
 }
