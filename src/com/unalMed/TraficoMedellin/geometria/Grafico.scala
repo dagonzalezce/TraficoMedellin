@@ -90,6 +90,7 @@ object Grafico {
   frame.setVisible(true) // Siempre visible
   frame.setResizable(true) // Que no se le pueda cambiar el tamano
   frame.getBounds //Rectangle
+  frame.setSize(1400, 800) // ponerle tamaño a la ventana 
   
 
   
