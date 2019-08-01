@@ -82,12 +82,29 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
                                      new Bus( pp, ferrCol, new Velocidad( 60, new Angulo(270))))
                           
   */
+  
+  /* Escribir en el archivo resultados.json
+  
+  val rvehiculos = RVehiculos(410,120,150,80,50,10)
+  val vehiculoenInterseccion  = RVehiculosEnInterseccion(50,46,5,3)
+  val mallaVial = RMallaVial(50,15,10,40,60,80,422,vehiculoenInterseccion)
+  val tiempos = RTiempos(600,50)
+  val velocidades = RVelocidades(40,80,63)
+  val distancias = RDistancias(523,1540,1250)
+  
+  val resul =  Resultados(rvehiculos,mallaVial,tiempos,velocidades,distancias)
+  
+  ArchivosJson.escribirArchivo(resul)*/
+  
+  
+  
   var vehiculos: Array[Vehiculo] = Array()
   
   def run(){
     estado = true
     var dt = 1
     var tRefresh = 20 // t refresh de 1 mata la grafica
+    
     while (true) {
       if( estado ){
         vehiculos.foreach(_.mover(dt))

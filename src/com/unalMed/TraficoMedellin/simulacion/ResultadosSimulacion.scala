@@ -8,6 +8,3 @@ case class RTiempos (simulacion: Double, realidad: Double)
 case class RVelocidades (minima: Double, maxima: Double, prodemio: Double)
 case class RDistancias (minima: Double, maxima: Double, prodemio: Double)
 
-class ResultadosSimulacion(val resultados: Resultados) {
-  
-}
