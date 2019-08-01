@@ -26,6 +26,7 @@ import com.unalMed.TraficoMedellin.simulacion.Simulacion
 object Grafico {
   private var _numeroVias : Int = 0 //Variable para saber cuando acaban las vias y inicial los vehiculos en el dataset 
   private var _dataset: XYSeriesCollection = new XYSeriesCollection() //data set
+  private var _actualKey: Int = 0
   /*
    * Grafica vias y label 
    */
@@ -57,13 +58,14 @@ object Grafico {
   
   val s = Simulacion
   
+  
+  
   frame.addKeyListener( new KeyListener{
                            override def keyPressed( e : KeyEvent ): Unit = {
                              if( e.getKeyCode ==  KeyEvent.VK_F5 ){
+                               _limpiarVehiculos
                                println("Empezar simulacion")
                                val empiezanCarros = _numeroVias + 1
-                               while( _dataset.getSeriesCount != _numeroVias )
-                                 _dataset.removeSeries( empiezanCarros )
                                s.rundeprueba
                                //crearle estado a la simulacion
                              }
@@ -88,6 +90,14 @@ object Grafico {
   
 
   
+  private def _limpiarVehiculos: Unit = {
+     val empiezanCarros = _numeroVias + 1
+     while( _dataset.getSeriesCount > empiezanCarros ){
+    	 _dataset.removeSeries( empiezanCarros )
+    	 println(" numero vias " + _numeroVias.toString + " quedan elementos " + _dataset.getSeriesCount )       
+     }
+    
+  }
   
   def graficarVias( vias : Array[Via] ): Unit = {
     var _viaActual = 0
@@ -109,11 +119,13 @@ object Grafico {
     //Agregar el nombre de las intersecciones
     (vias.map(_.puntoInicio)++vias.map(_.puntoFinal)).distinct.foreach( inter =>
         sP.getXYPlot.addAnnotation( new XYTextAnnotation( inter.nombre.getOrElse(""), inter.x, inter.y  )))
+    _actualKey = _numeroVias + 1
     return
   }
   
   
   def graficarVehiculos( vehiculos: Array[com.unalMed.TraficoMedellin.movil.Vehiculo] ): Unit = {
+    _limpiarVehiculos
     var numCarroActual = _numeroVias + 1
     var listaDestinos = vehiculos.map(_.interseccionDestino)
     var listaColores : ArrayBuffer[java.awt.Color] = ArrayBuffer()
