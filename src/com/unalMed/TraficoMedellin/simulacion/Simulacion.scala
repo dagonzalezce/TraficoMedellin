@@ -9,7 +9,7 @@ import scala.util.Random
 import com.unalMed.TraficoMedellin.geometria.Grafico
 
 object Simulacion extends Runnable{
-  /*
+  
   val dt: Int= ArchivosJson.parametros.dt
   val tRefresh: Int= ArchivosJson.parametros.tRefresh
   val minVehiculos: Int= ArchivosJson.parametros.vehiculos.minimo
@@ -23,13 +23,7 @@ object Simulacion extends Runnable{
   val proporcionBuses: Double= ArchivosJson.parametros.proporciones.buses
   val proporcionCamiones: Double= ArchivosJson.parametros.proporciones.camiones
   val proporcionMotoTaxis: Double= ArchivosJson.parametros.proporciones.motoTaxis
-  */
-  val proporcionCarros: Double= 10
-  val proporcionMotos: Double= 10
-  val proporcionBuses: Double= 10
-  val proporcionCamiones: Double= 10
-  val proporcionMotoTaxis: Double= 10
-  
+
   val niquia = new Interseccion(300, 12000, Some("Niquia"))
   val lauraAuto = new Interseccion(2400, 11400, Some("M. Laura Auto"))
   val lauraReg = new Interseccion(2400, 12600, Some("M. Laura Reg"))
@@ -78,42 +72,57 @@ object Simulacion extends Runnable{
   var t=0
   
   GrafoVia.construir(vias)
-  
   var g = Grafico
   g.graficarVias(vias.toArray)
-  
-  //mientras montan le run
-  def rundeprueba(){
-    Grafico.graficarVehiculos( Array(new Carro( bol65, terminal , new Velocidad( 1, new Angulo(90))),
-                                     new MotoTaxi( niquia, _65_80, new Velocidad( 1, new Angulo(90))),
-                                     new Camion( gu30, gu_37S, new Velocidad( 1, new Angulo(90))),
-                                     new Moto( pqEnv, reg30, new Velocidad( 1, new Angulo(90))),
-                                     new Bus( pp, ferrCol, new Velocidad( 1, new Angulo(90)))    
-                             ))
-  }
-
+/*  
+var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocidad( 60, new Angulo(270))),
+                                     new MotoTaxi( niquia, _65_80, new Velocidad( 60, new Angulo(360))),
+                                     new Camion( gu30, gu_37S, new Velocidad( 60, new Angulo(270))),
+                                     new Moto( pqEnv, reg30, new Velocidad( 60, new Angulo(270))),
+                                     new Bus( pp, ferrCol, new Velocidad( 60, new Angulo(270))))
+                          
+  */
+  var vehiculos: Array[Vehiculo] = Array()
   
   def run(){
-    /*
+    estado = true
     var dt = 1
-    var t = 0
+    var tRefresh = 20 // t refresh de 1 mata la grafica
     while (true) {
-      vehiculos.foreach(_.mover(dt))
-      t += dt
-      Grafico.graficarVehiculos(vehiculos)
-      Thread.sleep(tRefresh)
-			
+      if( estado ){
+        vehiculos.foreach(_.mover(dt))
+        t += dt
+        Grafico.graficarVehiculos(vehiculos)
+        Thread.sleep(tRefresh)
+      }
+     if( estado ) println( "corriendo" ) else println( "pausa" ) 
      }
-     */
+    
   }
-  /*
+  // true es corriendo false es en pausa
+  var estado : Boolean = false
+  
+  def reiniciar{
+    vehiculos = crearVehiculos
+    continuar
+  }
+  
+  def pausar: Unit = {
+    estado = false
+  }
+  
+  def continuar: Unit = {
+    estado = true
+  }
+  
+  
   def crearVehiculos() : Array[Vehiculo] = {
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
     val array= new Array[Vehiculo](size)
     for(i <- 0 to size-1) array(i)= Vehiculo()
     array
   }
-  */
+  
   
   def crearIntersecciones() : List[Interseccion] = {
     List(niquia,lauraAuto,lauraReg ,ptoCero,mino,villa,ig65,robledo,colReg,

@@ -26,7 +26,7 @@ trait MovimientoUniforme {
    */
   def mover( dt:Int = 1 ): Unit = {
     _posicion.x = ( _posicion.x.toDouble + _velocidad.magnitud * math.cos( _velocidad.angulo.angulo.toRadians ) * dt ).toInt
-    _posicion.y = ( _posicion.y.toDouble + _velocidad.magnitud + math.sin( _velocidad.angulo.angulo.toRadians ) * dt ).toInt
+    _posicion.y = ( _posicion.y.toDouble + _velocidad.magnitud * math.sin( _velocidad.angulo.angulo.toRadians ) * dt ).toInt
   }
     
   

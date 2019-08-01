@@ -57,22 +57,25 @@ object Grafico {
   )
   
   val s = Simulacion
-  
+  var listaColores : ArrayBuffer[java.awt.Color] = ArrayBuffer()
+
   
   
   frame.addKeyListener( new KeyListener{
                            override def keyPressed( e : KeyEvent ): Unit = {
                              if( e.getKeyCode ==  KeyEvent.VK_F5 ){
-                               _limpiarVehiculos
-                               println("Empezar simulacion")
-                               val empiezanCarros = _numeroVias + 1
-                               s.rundeprueba
-                               //crearle estado a la simulacion
+                            	 s.reiniciar
                              }
-                             if( e.getKeyCode ==  KeyEvent.VK_F6 )
+                             if( e.getKeyCode ==  KeyEvent.VK_F6 ){
                                println("Pausar simulacion")
-                               //s.pause dt = 0
+                               if ( s.estado == true ){
+                                 s.pausar
+                               }
+                               else{
+                                 s.continuar
+                               }
                              }
+                           }
                            override def keyTyped( e : KeyEvent ): Unit = {
                              
                            }
@@ -91,12 +94,10 @@ object Grafico {
 
   
   private def _limpiarVehiculos: Unit = {
-     val empiezanCarros = _numeroVias + 1
-     while( _dataset.getSeriesCount > empiezanCarros ){
+     val empiezanCarros = _numeroVias 
+     while( _dataset.getSeriesCount > empiezanCarros  ){
     	 _dataset.removeSeries( empiezanCarros )
-    	 println(" numero vias " + _numeroVias.toString + " quedan elementos " + _dataset.getSeriesCount )       
-     }
-    
+      }
   }
   
   def graficarVias( vias : Array[Via] ): Unit = {
@@ -114,6 +115,7 @@ object Grafico {
                           r.getSeriesStroke(_viaActual).createStrokedShape( new Line2D.Float()) // Forma de linea
                           r.setSeriesShapesVisible(_viaActual, false) //Quita los cuadrados en las esquinas
                           r.setSeriesLinesVisible(_viaActual, true) // Mostrar lineas
+                          
                           _viaActual=_viaActual + 1 // Aumentar el numero de la via
                         } )
     //Agregar el nombre de las intersecciones
@@ -126,26 +128,25 @@ object Grafico {
   
   def graficarVehiculos( vehiculos: Array[com.unalMed.TraficoMedellin.movil.Vehiculo] ): Unit = {
     _limpiarVehiculos
-    var numCarroActual = _numeroVias + 1
     var listaDestinos = vehiculos.map(_.interseccionDestino)
-    var listaColores : ArrayBuffer[java.awt.Color] = ArrayBuffer()
-     listaDestinos.foreach( destino => listaColores.append(java.awt.Color.getHSBColor(Random.nextFloat()*255,
+    listaDestinos.foreach( destino => listaColores.append(java.awt.Color.getHSBColor(Random.nextFloat()*255,
         Random.nextFloat()*255,
         Random.nextFloat()*255) ) )
     vehiculos.foreach( vehiculo => {
-  	  var s = new XYSeries(numCarroActual)
+  	  var s = new XYSeries(_actualKey)
   	  s.add(vehiculo.posicion.x, vehiculo.posicion.y)
   	  _dataset.addSeries(s)
-  	  r.setSeriesPaint( numCarroActual, listaColores.apply(listaDestinos.indexOf(vehiculo.interseccionDestino) ) )
+  	  r.setSeriesPaint( _actualKey, listaColores.apply(listaDestinos.indexOf(vehiculo.interseccionDestino) ) )
   	  vehiculo match { 
-  	    case Carro(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createDiagonalCross(7, 1f)) // primer arg es tamano 2 es grosor
-  	    case Camion(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createDiamond(7)) // primer argumento es el tamano
-  	    case Bus(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createDownTriangle(7)) // primer argumento es el tamano
-  	    case Moto(_,_,_) => r.setSeriesShape(numCarroActual, org.jfree.util.ShapeUtilities.createUpTriangle(7))
+  	    case Carro(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiagonalCross(7, 1f)) // primer arg es tamano 2 es grosor
+  	    case Camion(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiamond(7)) // primer argumento es el tamano
+  	    case Bus(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDownTriangle(7)) // primer argumento es el tamano
+  	    case Moto(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createUpTriangle(7))
   	    case MotoTaxi(_,_,_) => //Default figura
   	  }
-  	  numCarroActual = numCarroActual + 1
+  	  _actualKey = _actualKey + 1
     })
+    //println(_actualKey)
   }
   
 }

@@ -19,7 +19,7 @@ object Vehiculo{
     val inD= interseccionesAleatorias(1)
     
     // Por cambiar
-    var v: Velocidad = new Velocidad( 1, new Angulo(90) ) // Valor mientras mayra implement ael grafo y pensamos velocidad
+    var v: Velocidad = new Velocidad( 20, new Angulo(Random.nextInt(360)) ) // Valor mientras mayra implement ael grafo y pensamos velocidad
     
     _generarRandomProporciones( Simulacion.proporcionCarros,
         Simulacion.proporcionCamiones,
