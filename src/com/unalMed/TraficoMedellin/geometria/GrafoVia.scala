@@ -4,6 +4,8 @@ import scalax.collection.mutable.Graph
 import scalax.collection.edge.WLDiEdge
 import scala.collection.mutable.ArrayBuffer
 import com.unalMed.TraficoMedellin.vias.{Via, Interseccion, Sentido}
+import scalax.collection.mutable.{AdjacencyListGraph$EdgeImpl => Edge}
+import scala.collection.mutable.Queue 
 
 object GrafoVia {
   
@@ -27,11 +29,15 @@ object GrafoVia {
       
     }
   
-  def caminoCorto ( nodoOrigen: Interseccion, nodoDestino: Interseccion) : Option[GrafoVia.grafo.Path] = {
+  def caminoCorto ( nodoOrigen: Interseccion, nodoDestino: Interseccion) : Queue[Via] = {
+    
+    val trayectoVias = Queue[Via]()
     
     val camino = grafo.get(nodoOrigen).shortestPathTo(grafo.get(nodoDestino))
     
-    camino
+    camino.get.filter(_.isInstanceOf[Edge]).foreach(x=>trayectoVias += (x.asInstanceOf[Edge].label.asInstanceOf[Via]))
+    
+    trayectoVias
   }
   
     
