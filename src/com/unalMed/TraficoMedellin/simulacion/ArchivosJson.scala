@@ -31,7 +31,7 @@ object ArchivosJson {
   
   
   //recibe la instancia de resultados enviada por simulacion
-  def escribirArchivo( resultados: Resultados) {
+  def escribirArchivo( resultados: ResultadosSimulacion) {
     val pw = new PrintWriter(new File(ruta+archivo2))
     pw.write(write(resultados))
     pw.close

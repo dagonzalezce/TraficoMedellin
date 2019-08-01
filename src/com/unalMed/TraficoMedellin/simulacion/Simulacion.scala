@@ -83,7 +83,7 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
                           
   */
   
-  /* Escribir en el archivo resultados.json
+  // Escribir en el archivo resultados.json
   
   val rvehiculos = RVehiculos(410,120,150,80,50,10)
   val vehiculoenInterseccion  = RVehiculosEnInterseccion(50,46,5,3)
@@ -93,8 +93,10 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
   val distancias = RDistancias(523,1540,1250)
   
   val resul =  Resultados(rvehiculos,mallaVial,tiempos,velocidades,distancias)
+  val resultadosSimulacion = ResultadosSimulacion(resul)
   
-  ArchivosJson.escribirArchivo(resul)*/
+  
+  //ArchivosJson.escribirArchivo(resultadosSimulacion)
   
   
   
@@ -104,7 +106,7 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
     estado = true
     var dt = 1
     var tRefresh = 20 // t refresh de 1 mata la grafica
-    
+    ArchivosJson.escribirArchivo(resultadosSimulacion)
     while (true) {
       if( estado ){
         vehiculos.foreach(_.mover(dt))
