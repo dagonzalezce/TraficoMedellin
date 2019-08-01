@@ -33,7 +33,6 @@ object Simulacion extends Runnable{
   val ig65 = new Interseccion(5400, 10500, Some("65 Igu"))
   val robledo = new Interseccion(5400, 1500, Some("Exito Rob"))
   val colReg = new Interseccion(8250, 12000, Some("Col Reg"))  
-  val colFerr = new Interseccion(8250, 15000, Some("Col Ferr"))
   val col65 = new Interseccion(8250, 10500, Some("Col 65"))
   val col80 = new Interseccion(8250, 1500, Some("Col 80"))
   val juanOr = new Interseccion(10500, 19500, Some("Sn Juan Ori"))
@@ -114,7 +113,6 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
         Grafico.graficarVehiculos(vehiculos)
         Thread.sleep(tRefresh)
       }
-     if( estado ) println( "corriendo" ) else println( "pausa" ) 
      }
     
   }
@@ -145,7 +143,7 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
   
   def crearIntersecciones() : List[Interseccion] = {
     List(niquia,lauraAuto,lauraReg ,ptoCero,mino,villa,ig65,robledo,colReg,
-        colFerr, col65, col80,juanOr,maca ,expo,reg30, monte,agua ,viva , mayor,
+        col65, col80,juanOr,maca ,expo,reg30, monte,agua ,viva , mayor,
         ferrCol , ferrJuan , sanDiego , premium ,pp, santafe, pqEnv ,juan65, juan80,
         _33_65 , bule , gema , _30_65, _30_70 , _30_80, bol65 ,gu10 ,terminal, gu30 ,
         gu80 ,_65_80 , gu_37S )

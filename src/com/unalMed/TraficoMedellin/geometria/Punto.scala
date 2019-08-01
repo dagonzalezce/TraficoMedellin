@@ -12,7 +12,7 @@ case class Punto ( private var _x: Int, private var _y: Int ) {
   
     def calcularAnguloA(punto: Punto): Double={
     
-    var a=Math.atan2(punto.y-x, punto.x-x)*180.0/Math.PI
+    var a=Math.atan2(punto.y-y, punto.x-x)*180.0/Math.PI
     
     if(a<0) a+=360
     

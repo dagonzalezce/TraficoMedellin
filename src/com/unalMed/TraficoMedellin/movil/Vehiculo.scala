@@ -4,11 +4,45 @@ import scala.util.Random
 import com.unalMed.TraficoMedellin.vias._
 import com.unalMed.TraficoMedellin.simulacion._
 import com.unalMed.TraficoMedellin.geometria._
+import scalax.collection.mutable.{AdjacencyListGraph$EdgeImpl => Edge}
+import scala.collection.mutable.Queue
+
 
 abstract class Vehiculo ( val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion, val ve: Velocidad ) 
                 extends Movil(new Punto( interseccionOrigen.x, interseccionOrigen.y ),ve) with MovimientoUniforme{
   
   val placa: String  
+  val trayectoVias = GrafoVia.caminoCorto(interseccionOrigen, interseccionDestino)
+  
+  private var siguienteInterseccion : Interseccion = interseccionOrigen
+  private var viaActual : Via=trayectoVias.dequeue
+  posicion= interseccionOrigen
+  
+  
+  def mover(dt: Int){
+    if (posicion == interseccionDestino) return
+    
+    if(posicion == viaActual.origen){
+      siguienteInterseccion= viaActual.fin
+      
+    }else if(posicion == viaActual.fin){
+      siguienteInterseccion= viaActual.origen
+      }
+    velocidad.angulo= new Angulo(posicion.calcularAnguloA(siguienteInterseccion))
+    moverUniformemente(dt)
+    if(cercaDeInterseccion(siguienteInterseccion, dt)){
+      posicion= siguienteInterseccion.asInstanceOf[Punto]
+      if(!trayectoVias.isEmpty) viaActual= trayectoVias.dequeue
+      }    
+  }
+ 
+  
+  def cercaDeInterseccion(interseccion: Interseccion, dt:Int): Boolean={
+    var distancia= Math.sqrt(Math.pow((posicion.x - interseccion.x),2) + Math.pow((posicion.y - interseccion.y),2))
+    distancia = Math.abs(distancia)
+    (distancia <= velocidad.magnitud*dt)
+  }
+
 }
 
 
@@ -20,18 +54,19 @@ object Vehiculo{
     
     // Por cambiar
     var v: Velocidad = new Velocidad( 20, new Angulo(Random.nextInt(360)) ) // Valor mientras mayra implement ael grafo y pensamos velocidad
+    val r = Random.nextDouble()	   
+    val i1= Simulacion.proporcionCarros	    
+    val i2= i1+Simulacion.proporcionMotos	    
+    val i3= i2+Simulacion.proporcionBuses	    
+    val i4= i3+Simulacion.proporcionCamiones	    
+    val i5= i4+Simulacion.proporcionMotoTaxis
     
-    _generarRandomProporciones( Simulacion.proporcionCarros,
-        Simulacion.proporcionCamiones,
-        Simulacion.proporcionBuses,
-        Simulacion.proporcionMotos,
-        Simulacion.proporcionMotoTaxis) match {
-      case 0 => new Carro( inO, inD, v )
-      case 1 => new Camion( inO, inD, v )
-      case 2 => new Bus( inO, inD, v )
-      case 3 => new Moto( inO, inD, v )
-      case 4 => new MotoTaxi( inO, inD, v ) 
-    }
+    if(r<=i1){ new Carro(inO, inD, v)	     
+    }else if(r<=i2){  new Moto(inO, inD, v)	     
+    }else if(r<=i3){  new Bus(inO, inD, v)	     
+    }else if(r<=i4){  new Camion(inO, inD, v)	      
+    }else { new MotoTaxi(inO, inD, v)	     
+    }      	         
   }
   
   
@@ -48,21 +83,6 @@ object Vehiculo{
     na
   }
   
-  //Devuelve un entero de 1 a 5 dependiendo de las proporciones
-  private def _generarRandomProporciones( pCarro : Double, pCamion: Double, pBus: Double, pMoto: Double, pMotoTaxi: Double  ): Int = {
-    val r : Double = Random.nextDouble()
-    if( r <= pCarro ){ //Caso carro
-      return 0
-    }else if(r<=pCarro + pCamion ){ //Caso Camion
-      return 1
-    }else if(r<= pCarro + pCamion + pBus){ //Caso Bus
-      return 2
-    }else if(r<= pCarro + pCamion+ pBus + pMoto){ //Caso Moto
-      return 3
-    }else {  //Caso MotoTaxi
-      return 4
-    }      
-  }
 }
 
 
