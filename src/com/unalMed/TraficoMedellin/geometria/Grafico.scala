@@ -70,6 +70,7 @@ object Grafico {
                            override def keyPressed( e : KeyEvent ): Unit = {
                              if( e.getKeyCode ==  KeyEvent.VK_F5 ){
                             	 s.reiniciar
+                            	 _actualKey = _numeroVias
                              }
                              if( e.getKeyCode ==  KeyEvent.VK_F6 ){
                                println("Pausar simulacion")

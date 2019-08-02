@@ -90,15 +90,9 @@ object Simulacion extends Runnable{
   val resultadosSimulacion = ResultadosSimulacion(resul)
   
   
-  //ArchivosJson.escribirArchivo(resultadosSimulacion)
+  ArchivosJson.escribirArchivo(resultadosSimulacion)
   
-  /*
- 	var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, _65_80 , new Velocidad( 60, new Angulo(270))),
-			new MotoTaxi( niquia, _65_80, new Velocidad( 60, new Angulo(360))),
-			new Camion( gu30, _65_80, new Velocidad( 60, new Angulo(270))),
-			new Moto( pqEnv, _65_80, new Velocidad( 60, new Angulo(270))),
-			new Bus( pp, _65_80, new Velocidad( 60, new Angulo(270))))
-   */
+
   var vehiculos: Array[Vehiculo] = Array()
   
   def run(){
@@ -121,6 +115,7 @@ object Simulacion extends Runnable{
   var estado : Boolean = false
   
   def reiniciar{
+    vehiculos = Array()
     vehiculos = crearVehiculos
     continuar
   }
