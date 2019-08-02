@@ -73,14 +73,9 @@ object Simulacion extends Runnable{
   GrafoVia.construir(vias)
   var g = Grafico
   g.graficarVias(vias.toArray)
-/*  
-var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocidad( 60, new Angulo(270))),
-                                     new MotoTaxi( niquia, _65_80, new Velocidad( 60, new Angulo(360))),
-                                     new Camion( gu30, gu_37S, new Velocidad( 60, new Angulo(270))),
-                                     new Moto( pqEnv, reg30, new Velocidad( 60, new Angulo(270))),
-                                     new Bus( pp, ferrCol, new Velocidad( 60, new Angulo(270))))
+ 
                           
-  */
+  
   
   // Escribir en el archivo resultados.json
   
@@ -97,14 +92,19 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
   
   //ArchivosJson.escribirArchivo(resultadosSimulacion)
   
-  
-  
+  /*
+ 	var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, _65_80 , new Velocidad( 60, new Angulo(270))),
+			new MotoTaxi( niquia, _65_80, new Velocidad( 60, new Angulo(360))),
+			new Camion( gu30, _65_80, new Velocidad( 60, new Angulo(270))),
+			new Moto( pqEnv, _65_80, new Velocidad( 60, new Angulo(270))),
+			new Bus( pp, _65_80, new Velocidad( 60, new Angulo(270))))
+   */
   var vehiculos: Array[Vehiculo] = Array()
   
   def run(){
     estado = true
-    var dt = 1
-    var tRefresh = 20 // t refresh de 1 mata la grafica
+    var dt = 10
+    var tRefresh = 120 // t refresh de 1 mata la grafica
     ArchivosJson.escribirArchivo(resultadosSimulacion)
     while (true) {
       if( estado ){
@@ -135,6 +135,7 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
   
   
   def crearVehiculos() : Array[Vehiculo] = {
+    
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
     val array= new Array[Vehiculo](size)
     for(i <- 0 to size-1) array(i)= Vehiculo()

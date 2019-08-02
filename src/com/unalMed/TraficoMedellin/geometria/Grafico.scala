@@ -27,6 +27,8 @@ object Grafico {
   private var _numeroVias : Int = 0 //Variable para saber cuando acaban las vias y inicial los vehiculos en el dataset 
   private var _dataset: XYSeriesCollection = new XYSeriesCollection() //data set
   private var _actualKey: Int = 0
+  //private var _mapColores: scala.collection.mutable.Map[com.unalMed.TraficoMedellin.vias.Interseccion, java.awt.Color] = scala.collection.mutable.Map()
+  private var _mapColores: scala.collection.mutable.Map[String, java.awt.Color] = scala.collection.mutable.Map()
   /*
    * Grafica vias y label 
    */
@@ -56,11 +58,14 @@ object Grafico {
     false // Scroll panel
   )
   
+  /*
+  Simulacion.intersecciones.distinct.foreach( inter => _listaDestinos.+=( inter ) )
+  _listaDestinos.foreach( inter => listaColores.append(java.awt.Color.getHSBColor(Random.nextFloat()*255,
+          Random.nextFloat()*255,
+          Random.nextFloat()*255) ) )
+  */
+  
   val s = Simulacion
-  var listaColores : ArrayBuffer[java.awt.Color] = ArrayBuffer()
-
-  
-  
   frame.addKeyListener( new KeyListener{
                            override def keyPressed( e : KeyEvent ): Unit = {
                              if( e.getKeyCode ==  KeyEvent.VK_F5 ){
@@ -93,6 +98,7 @@ object Grafico {
   frame.setSize(1400, 800) // ponerle tamaño a la ventana 
   
 
+                        
   
   private def _limpiarVehiculos: Unit = {
      val empiezanCarros = _numeroVias 
@@ -103,10 +109,9 @@ object Grafico {
   
   def graficarVias( vias : Array[Via] ): Unit = {
     var _viaActual = 0
-    
     _dataset.removeAllSeries()
     _numeroVias = vias.length
-    
+    //Grafica las vias
     vias.foreach( via =>{ var s = new XYSeries(s"Via${_viaActual}")
                           s.add(via.origen.x, via.origen.y)
                           s.add(via.fin.x, via.fin.y)
@@ -118,32 +123,44 @@ object Grafico {
                           r.setSeriesLinesVisible(_viaActual, true) // Mostrar lineas
                           
                           _viaActual=_viaActual + 1 // Aumentar el numero de la via
-                        } )
-    //Agregar el nombre de las intersecciones
-    (vias.map(_.puntoInicio)++vias.map(_.puntoFinal)).distinct.foreach( inter =>
-        sP.getXYPlot.addAnnotation( new XYTextAnnotation( inter.nombre.getOrElse(""), inter.x, inter.y  )))
-    _actualKey = _numeroVias + 1
+                          } )
+    //Agrega mapa y color por interseccion
+    (vias.map(_.fin)++(vias.map(_.origen))).distinct.foreach( interseccion => { 
+      _mapColores.+=( interseccion.nombre.get -> java.awt.Color.getHSBColor(Random.nextFloat()*100f+100f,
+                                                                 Random.nextFloat()*100f+100f,
+                                                                 Random.nextFloat()*100f+100f) )
+                                                                 
+    		  println("ward")
+      //Agrega anotaciones a la via
+      var _annotation = new XYTextAnnotation( interseccion.nombre.getOrElse(""), interseccion.x, interseccion.y  ) 
+      _annotation.setPaint( _mapColores.get(interseccion.nombre.get).getOrElse(java.awt.Color.BLACK) )
+      sP.getXYPlot.addAnnotation( _annotation )
+      //sP.getXYPlot.getAnnotations.forEach( annotation => annotation.asInstanceOf[XYTextAnnotation].setPaint( java.awt.Color.getHSBColor(Random.nextFloat()*255,
+      //                                                           Random.nextFloat()*255,
+      //                                                           Random.nextFloat()*255) ) )
+      //sP.getXYPlot.getAnnotations.get(_viaActual).asInstanceOf[XYTextAnnotation].setPaint(_mapColores.get(interseccion).getOrElse(java.awt.Color.BLACK)) 
+     })
+    _actualKey = _numeroVias 
+    println( _mapColores.mkString(",") )
     return
   }
   
   
   def graficarVehiculos( vehiculos: Array[com.unalMed.TraficoMedellin.movil.Vehiculo] ): Unit = {
     _limpiarVehiculos
-    var listaDestinos = vehiculos.map(_.interseccionDestino)
-    listaDestinos.foreach( destino => listaColores.append(java.awt.Color.getHSBColor(Random.nextFloat()*255,
-        Random.nextFloat()*255,
-        Random.nextFloat()*255) ) )
+    //var listaDestinos = vehiculos.map(_.interseccionDestino)
+    
     vehiculos.foreach( vehiculo => {
   	  var s = new XYSeries(_actualKey)
   	  s.add(vehiculo.posicion.x, vehiculo.posicion.y)
   	  _dataset.addSeries(s)
-  	  r.setSeriesPaint( _actualKey, listaColores.apply(listaDestinos.indexOf(vehiculo.interseccionDestino) ) )
+  	  r.setSeriesPaint( _actualKey, _mapColores.get(vehiculo.interseccionDestino.nombre.get).getOrElse(java.awt.Color.BLACK) )
   	  vehiculo match { 
   	    case Carro(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiagonalCross(7, 1f)) // primer arg es tamano 2 es grosor
   	    case Camion(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiamond(7)) // primer argumento es el tamano
   	    case Bus(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDownTriangle(7)) // primer argumento es el tamano
   	    case Moto(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createUpTriangle(7))
-  	    case MotoTaxi(_,_,_) => //Default figura
+  	    case MotoTaxi(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createUpTriangle(7))
   	  }
   	  _actualKey = _actualKey + 1
     })
