@@ -113,6 +113,7 @@ var vehiculos : Array[Vehiculo]=  Array(new Carro( bol65, terminal , new Velocid
         Grafico.graficarVehiculos(vehiculos)
         Thread.sleep(tRefresh)
       }
+      println(estado) //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
      }
     
   }
