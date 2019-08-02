@@ -96,7 +96,7 @@ object Simulacion extends Runnable{
   var vehiculos: Array[Vehiculo] = Array()
   
   def run(){
-    estado = true
+    estado = false
     var dt = 10
     var tRefresh = 120 // t refresh de 1 mata la grafica
     ArchivosJson.escribirArchivo(resultadosSimulacion)
