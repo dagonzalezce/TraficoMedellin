@@ -1,9 +1,11 @@
 Integrantes:
 ____________
-Sergio Zambrano
+Sergio Andrés Zambrano González
 
-Mayra Tejada
+Mayra Tejada Osorio
 
-Juan Ardila
+Juan David Mejia Ardila
 
-David González
+David Alexander González Céspedes
+
+NOTA: En la clase ArchivosJson cambiar ruta (por la de su computador) para el correcto funcionamiento.
