@@ -1,6 +1,6 @@
 package com.unalMed.TraficoMedellin.vias
 
-class Sentido private (nombre:String)
+class Sentido private (val nombre:String)
 
 
 object Sentido {

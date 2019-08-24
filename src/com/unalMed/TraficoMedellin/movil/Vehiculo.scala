@@ -13,6 +13,7 @@ abstract class Vehiculo ( val interseccionOrigen: Interseccion, val interseccion
   
   val placa: String  
   val trayectoVias = GrafoVia.caminoCorto(interseccionOrigen, interseccionDestino)
+  val distanciaARecorrer= calcularDistanciaARecorrer
   
   private var siguienteInterseccion : Interseccion = interseccionOrigen
   private var viaActual : Via=trayectoVias.dequeue
@@ -20,6 +21,7 @@ abstract class Vehiculo ( val interseccionOrigen: Interseccion, val interseccion
   
   
   def mover(dt: Int){
+    if(llegoADestino) return
     if (posicion == interseccionDestino) return
     
     if(posicion == viaActual.origen){
@@ -42,7 +44,15 @@ abstract class Vehiculo ( val interseccionOrigen: Interseccion, val interseccion
     distancia = Math.abs(distancia)
     (distancia <= velocidad.magnitud*dt)
   }
-
+  def llegoADestino():Boolean={
+    posicion==interseccionDestino
+  }
+  
+  def calcularDistanciaARecorrer(): Double={
+     var dis:Double =0
+     trayectoVias.foreach(x=> dis = dis + x.longitud)
+     dis
+  }
 }
 
 

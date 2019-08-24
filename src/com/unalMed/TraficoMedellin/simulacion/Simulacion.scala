@@ -69,51 +69,39 @@ object Simulacion extends Runnable{
   val vias = crearVias()
   //val vehiculos = crearVehiculos()
   var t=0
+  var tiempoInicio= 0L
   
   GrafoVia.construir(vias)
   Grafico.graficarVias(vias.toArray)
  
-                          
+   var vehiculos: Array[Vehiculo] = Array()
   
-  
-  // Escribir en el archivo resultados.json
-  
-  val rvehiculos = RVehiculos(410,120,150,80,50,10)
-  val vehiculoenInterseccion  = RVehiculosEnInterseccion(50,46,5,3)
-  val mallaVial = RMallaVial(50,15,10,40,60,80,422,vehiculoenInterseccion)
-  val tiempos = RTiempos(600,50)
-  val velocidades = RVelocidades(40,80,63)
-  val distancias = RDistancias(523,1540,1250)
-  
-  val resul =  Resultados(rvehiculos,mallaVial,tiempos,velocidades,distancias)
-  val resultadosSimulacion = ResultadosSimulacion(resul)
-  
-  
-  ArchivosJson.escribirArchivo(resultadosSimulacion)
-  
-
-  var vehiculos: Array[Vehiculo] = Array()
-  
-  def run(){
+    def run(){
     estado = false
     var dt = 10
     var tRefresh = 120 // t refresh de 1 mata la grafica
-    ArchivosJson.escribirArchivo(resultadosSimulacion)
     while (true) {
       if( estado ){
         vehiculos.foreach(_.mover(dt))
         t += dt
         Grafico.graficarVehiculos(vehiculos)
         Thread.sleep(tRefresh)
+        
+        var llegaronTodos=true
+        vehiculos.foreach(x=> if(!x.llegoADestino) llegaronTodos=false)
+        if(llegaronTodos && !vehiculos.isEmpty) ArchivosJson.escribirArchivo(ResultadosSimulacion())
       }
       println(estado) //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
      }
     
   }
+
   // true es corriendo false es en pausa
   var estado : Boolean = false
   
   def reiniciar{
+    t=0
+    tiempoInicio= System.currentTimeMillis()
     vehiculos = Array()
     vehiculos = crearVehiculos
     continuar
