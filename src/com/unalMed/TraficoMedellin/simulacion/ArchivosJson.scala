@@ -35,7 +35,6 @@ object ArchivosJson {
     val pw = new PrintWriter(new File(ruta+archivo2))
     pw.write(write(resultados))
     pw.close
-    print("archivo escrito")
   }
   
 }
