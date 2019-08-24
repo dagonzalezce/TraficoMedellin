@@ -157,11 +157,11 @@ object Grafico {
   	  _dataset.addSeries(s)
   	  r.setSeriesPaint( _actualKey, _mapColores.get(vehiculo.interseccionDestino.nombre.get).getOrElse(java.awt.Color.BLACK) )
   	  vehiculo match { 
-  	    case Carro(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiagonalCross(7, 1f)) // primer arg es tamano 2 es grosor
-  	    case Camion(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiamond(7)) // primer argumento es el tamano
-  	    case Bus(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDownTriangle(7)) // primer argumento es el tamano
-  	    case Moto(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createUpTriangle(7))
-  	    case MotoTaxi(_,_,_) => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createUpTriangle(7))
+  	    case vehiculo: Carro => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiagonalCross(7, 1f)) // primer arg es tamano 2 es grosor
+  	    case vehiculo: Camion => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiamond(7)) // primer argumento es el tamano
+  	    case vehiculo: Bus => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDownTriangle(7)) // primer argumento es el tamano
+  	    case vehiculo: Moto => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createUpTriangle(7))
+  	    case vehiculo: MotoTaxi => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createUpTriangle(7))
   	  }
   	  _actualKey = _actualKey + 1
     })

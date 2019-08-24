@@ -1,6 +1,6 @@
 package com.unalMed.TraficoMedellin.geometria
 
-class Velocidad( private var _magnitud : Double, private var _angulo : Angulo  ) {
+case class Velocidad( private var _magnitud : Double, private var _angulo : Angulo  ) {
   this.magnitud_=(_magnitud)
   this.angulo_=( _angulo )
     

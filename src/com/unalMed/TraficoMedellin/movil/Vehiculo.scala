@@ -8,7 +8,7 @@ import scalax.collection.mutable.{AdjacencyListGraph$EdgeImpl => Edge}
 import scala.collection.mutable.Queue
 
 
-abstract class Vehiculo ( val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion, val ve: Velocidad ) 
+abstract case class Vehiculo ( val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion, val ve: Velocidad ) 
                 extends Movil(new Punto( interseccionOrigen.x, interseccionOrigen.y ),ve) with MovimientoUniforme{
   
   val placa: String  
