@@ -71,8 +71,7 @@ object Simulacion extends Runnable{
   var t=0
   
   GrafoVia.construir(vias)
-  var g = Grafico
-  g.graficarVias(vias.toArray)
+  Grafico.graficarVias(vias.toArray)
  
                           
   

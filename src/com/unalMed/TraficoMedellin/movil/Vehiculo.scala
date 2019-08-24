@@ -52,8 +52,8 @@ object Vehiculo{
     val inO= interseccionesAleatorias(0)
     val inD= interseccionesAleatorias(1)
     
-    // Por cambiar
-    var v: Velocidad = new Velocidad( 20, new Angulo(Random.nextInt(360)) ) // Valor mientras mayra implement ael grafo y pensamos velocidad
+    val magnVel: Int= Simulacion.minVelocidad+Random.nextInt(Simulacion.maxVelocidad-Simulacion.minVelocidad)    
+    val v: Velocidad = new Velocidad(Velocidad.aMetrosPorSegundo(magnVel), new Angulo(0)) 
     val r = Random.nextDouble()	   
     val i1= Simulacion.proporcionCarros	    
     val i2= i1+Simulacion.proporcionMotos	    
