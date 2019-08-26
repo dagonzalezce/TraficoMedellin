@@ -1,7 +1,7 @@
 {
 "pametrosSimulacion": {
-"dt": 1,
-"tRefresh": 1,
+"dt": 10,
+"tRefresh": 120,
 "vehiculos": {
 "minimo": 50,
 "maximo": 100
@@ -16,6 +16,11 @@
 "buses": 0.15,
 "camiones": 0.1,
 "motoTaxis": 0.05
+},
+"semaforos": {
+"minTiempoVerde": 100,
+"maxTiempoVerde": 200,
+"tiempoAmarillo": 50
 }
 }
 }
