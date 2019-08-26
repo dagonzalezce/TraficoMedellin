@@ -16,7 +16,10 @@ object Simulacion extends Runnable{
   val maxVehiculos: Int= ArchivosJson.parametros.vehiculos.maximo
   val minVelocidad: Int= ArchivosJson.parametros.velocidad.minimo
   val maxVelocidad: Int= ArchivosJson.parametros.velocidad.maximo
-  
+  val minAceleracion: Int= ArchivosJson.parametros.aceleracion.minimo
+  val maxAceleracion: Int= ArchivosJson.parametros.aceleracion.maximo
+  val XSemaforoAmarilloContinuar: Int= ArchivosJson.parametros.distanciasFrenadoVehiculos.XSemaforoAmarilloContinuar
+  val XSemaforoFrenar: Int= ArchivosJson.parametros.distanciasFrenadoVehiculos.XSemaforoFrenar
   
   val proporcionCarros: Double= ArchivosJson.parametros.proporciones.carros
   val proporcionMotos: Double= ArchivosJson.parametros.proporciones.motos

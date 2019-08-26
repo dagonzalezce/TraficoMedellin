@@ -8,8 +8,8 @@ import scalax.collection.mutable.{AdjacencyListGraph$EdgeImpl => Edge}
 import scala.collection.mutable.Queue
 
 
-abstract case class Vehiculo ( val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion, val ve: Velocidad ) 
-                extends Movil(new Punto( interseccionOrigen.x, interseccionOrigen.y ),ve) with MovimientoUniforme{
+abstract case class Vehiculo ( val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion, val ve: Velocidad, val acel: Aceleracion) 
+                extends Movil(new Punto( interseccionOrigen.x, interseccionOrigen.y ),ve,acel) with MovimientoUniforme{
   
   val placa: String  
   val trayectoVias = GrafoVia.caminoCorto(interseccionOrigen, interseccionDestino)
@@ -62,8 +62,10 @@ object Vehiculo{
     val inO= interseccionesAleatorias(0)
     val inD= interseccionesAleatorias(1)
     
-    val magnVel: Int= Simulacion.minVelocidad+Random.nextInt(Simulacion.maxVelocidad-Simulacion.minVelocidad)    
-    val v: Velocidad = new Velocidad(Velocidad.aMetrosPorSegundo(magnVel), new Angulo(0)) 
+    val magnVel: Int= Simulacion.minVelocidad+Random.nextInt(Simulacion.maxVelocidad-Simulacion.minVelocidad)
+    val magnAcel: Int= Simulacion.minAceleracion+Random.nextInt(Simulacion.maxAceleracion-Simulacion.minAceleracion)
+    val v: Velocidad = new Velocidad(Velocidad.aKilometrosPorHora(magnVel), new Angulo(0)) 
+    val a: Aceleracion = new Aceleracion(Aceleracion.aMetrosPorSegundo(magnVel))
     val r = Random.nextDouble()	   
     val i1= Simulacion.proporcionCarros	    
     val i2= i1+Simulacion.proporcionMotos	    
@@ -71,11 +73,11 @@ object Vehiculo{
     val i4= i3+Simulacion.proporcionCamiones	    
     val i5= i4+Simulacion.proporcionMotoTaxis
     
-    if(r<=i1){ new Carro(inO, inD, v)	     
-    }else if(r<=i2){  new Moto(inO, inD, v)	     
-    }else if(r<=i3){  new Bus(inO, inD, v)	     
-    }else if(r<=i4){  new Camion(inO, inD, v)	      
-    }else { new MotoTaxi(inO, inD, v)	     
+    if(r<=i1){ new Carro(inO, inD, v,a)	     
+    }else if(r<=i2){  new Moto(inO, inD, v,a)	     
+    }else if(r<=i3){  new Bus(inO, inD, v,a)	     
+    }else if(r<=i4){  new Camion(inO, inD, v,a)	      
+    }else { new MotoTaxi(inO, inD, v,a)	     
     }      	         
   }
   
