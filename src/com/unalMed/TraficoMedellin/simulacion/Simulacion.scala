@@ -1,5 +1,6 @@
 package com.unalMed.TraficoMedellin.simulacion
 
+
 import com.unalMed.TraficoMedellin.vias._
 import com.unalMed.TraficoMedellin.movil._
 import com.unalMed.TraficoMedellin.geometria._
@@ -102,20 +103,21 @@ object Simulacion extends Runnable{
   Grafico.graficarVias(vias.toArray)
  
    var vehiculos: Array[Vehiculo] = Array()
+   var viajes = ArrayBuffer[Viaje]()
   
     def run(){
     estado = false
     while (true) {
       if( estado ){
-        vehiculos.foreach(_.mover(dt))
+        viajes.foreach(_.avanzar(dt))
         nodosSemaforos.foreach(_.controlarFlujo(dt))
                 
         t += dt
-        Grafico.graficarVehiculos(vehiculos)
+        Grafico.graficarVehiculos(viajes)
         Thread.sleep(tRefresh)
         
         var llegaronTodos=true
-        vehiculos.foreach(x=> if(!x.llegoADestino) llegaronTodos=false)
+        viajes.foreach(x=> if(!x.llegoADestino()) llegaronTodos=false)
         if(llegaronTodos && !vehiculos.isEmpty) ArchivosJson.escribirArchivo(ResultadosSimulacion())
       }
       println(estado) //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
@@ -130,6 +132,7 @@ object Simulacion extends Runnable{
     t=0
     tiempoInicio= System.currentTimeMillis()
     vehiculos = Array()
+    viajes.clear()
     vehiculos = crearVehiculos
     continuar
   }
@@ -147,7 +150,11 @@ object Simulacion extends Runnable{
     
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
     val array= new Array[Vehiculo](size)
-    for(i <- 0 to size-1) array(i)= Vehiculo()
+    for(i <- 0 to size-1) {
+      var veh= Vehiculo()
+      array(i)= veh
+      viajes+= Viaje(veh)
+    }
     array
   }
   

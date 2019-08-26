@@ -2,13 +2,12 @@ package com.unalMed.TraficoMedellin.movil
 
 import com.unalMed.TraficoMedellin.geometria._
 
-abstract class Movil ( private val _pos: Punto, private val _vel: Velocidad, private val _ace: Aceleracion){
+abstract class Movil (private val _vel: Velocidad, private val _ace: Aceleracion){
   //Constructor
-  var _posicion = new Punto( _pos.x, _pos.y )
+  var _posicion = new Punto( 0,0)
   var _velocidad = new Velocidad( _vel.magnitud, new Angulo( _vel.angulo.angulo ) )
-  var _acelereacion = new Aceleracion( _ace.magnitud)
-  
-  //Getter y setters
+  var _aceleracion = new Aceleracion( _ace.magnitud)
+    //Getter y setters
   def posicion = _posicion
   def posicion_= (posicion: Punto): Unit = { _posicion.x = posicion.x
                                              _posicion.y = posicion.y} 
@@ -18,9 +17,9 @@ abstract class Movil ( private val _pos: Punto, private val _vel: Velocidad, pri
   def velocidad_= (velocidad: Velocidad): Unit = { _velocidad.angulo = velocidad.angulo
                                                    _velocidad.magnitud = velocidad.magnitud }
   
-  def aceleracion = _acelereacion
+  def aceleracion = _aceleracion
   
-  def aceleracion_= (aceleracion: Aceleracion): Unit = { _acelereacion.magnitud = aceleracion.magnitud }
+  def aceleracion_= (aceleracion: Aceleracion): Unit = { _aceleracion.magnitud = aceleracion.magnitud }
   
   //Metodo declarado para mover el objeto movil en una franja dt
   def mover (dt : Int): Unit 

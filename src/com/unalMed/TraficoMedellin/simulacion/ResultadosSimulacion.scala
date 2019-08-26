@@ -54,17 +54,17 @@ object ResultadosSimulacion{
   
   def distanciaMinima():Double={
     var distancias: ArrayBuffer[Double]= ArrayBuffer()
-    Simulacion.vehiculos.foreach(x=> distancias+= x.distanciaARecorrer)
+    Simulacion.viajes.foreach(x=> distancias+= x.distanciaARecorrer)
     distancias.reduce(Math.min(_,_))
     }
   def distanciaMaxima():Double={
     var distancias: ArrayBuffer[Double]= ArrayBuffer()
-    Simulacion.vehiculos.foreach(x=> distancias+= x.distanciaARecorrer)
+    Simulacion.viajes.foreach(x=> distancias+= x.distanciaARecorrer)
     distancias.reduce(Math.max(_,_))
     }
   def distanciaPromedio():Double={
     var distancias: ArrayBuffer[Double]= ArrayBuffer()
-    Simulacion.vehiculos.foreach(x=> distancias+= x.distanciaARecorrer)
+    Simulacion.viajes.foreach(x=> distancias+= x.distanciaARecorrer)
     distancias.reduce(_+_)/Simulacion.vehiculos.size
     }
   
@@ -90,19 +90,19 @@ object ResultadosSimulacion{
   
   def promedioOrigenVI(): Double={
     var numVeh:Double=0
-    Simulacion.intersecciones.foreach(x =>Simulacion.vehiculos.foreach(y => if(y.interseccionOrigen==x) numVeh+=1))
+    Simulacion.intersecciones.foreach(x =>Simulacion.viajes.foreach(y => if(y.interseccionOrigen==x) numVeh+=1))
     numVeh/Simulacion.intersecciones.size
     }
   def promedioDestinoVI(): Double={
     var numVeh:Double=0
-    Simulacion.intersecciones.foreach(x =>Simulacion.vehiculos.foreach(y => if(y.interseccionDestino==x) numVeh+=1))
+    Simulacion.intersecciones.foreach(x =>Simulacion.viajes.foreach(y => if(y.interseccionDestino==x) numVeh+=1))
     numVeh/Simulacion.intersecciones.size
   }
   def sinOrigenVI(): Int={
     var numInter=0
     Simulacion.intersecciones.foreach(x=> {
       var sinOr=true
-      Simulacion.vehiculos.foreach(y => if(y.interseccionOrigen==x) sinOr=false)
+      Simulacion.viajes.foreach(y => if(y.interseccionOrigen==x) sinOr=false)
       if (sinOr) numInter+=1
     })
     numInter
@@ -111,7 +111,7 @@ object ResultadosSimulacion{
     var numInter=0
     Simulacion.intersecciones.foreach(x=> {
       var sinDe=true
-      Simulacion.vehiculos.foreach(y => if(y.interseccionDestino==x) sinDe=false)
+      Simulacion.viajes.foreach(y => if(y.interseccionDestino==x) sinDe=false)
       if (sinDe) numInter+=1
     })
     numInter

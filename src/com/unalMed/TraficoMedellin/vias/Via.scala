@@ -20,6 +20,7 @@ class Via (val puntoInicio: Interseccion, val puntoFinal: Interseccion,val velMa
   
   def fotoMulta_= (fotoMulta: Option[CamaraFotoDeteccion]) = _fotoMulta = fotoMulta
   
+} 
   object Via{
     
     def apply(origen: Interseccion, fin: Interseccion, velMax:Double, tipo:TipoVia, sentido:Sentido, numero:String, nombre:Option[String]): Via= {
@@ -33,8 +34,7 @@ class Via (val puntoInicio: Interseccion, val puntoFinal: Interseccion,val velMa
       
     }
   }
-  
-}
+ 
 
 /*class Via (val puntoInicio: Interseccion, val puntoFinal: Interseccion, val velmax: Double, val tipo: TipoVia, val sentido: Sentido,
     val numero: String, private val _nombre: String) extends Recta {

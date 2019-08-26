@@ -147,15 +147,16 @@ object Grafico {
   }
   
   
-  def graficarVehiculos( vehiculos: Array[com.unalMed.TraficoMedellin.movil.Vehiculo] ): Unit = {
+  def graficarVehiculos( viajes: ArrayBuffer[com.unalMed.TraficoMedellin.movil.Viaje] ): Unit = {
     _limpiarVehiculos
     //var listaDestinos = vehiculos.map(_.interseccionDestino)
     
-    vehiculos.foreach( vehiculo => {
+    viajes.foreach( viaje => {
+      var vehiculo: Vehiculo= viaje.vehiculo
   	  var s = new XYSeries(_actualKey)
   	  s.add(vehiculo.posicion.x, vehiculo.posicion.y)
   	  _dataset.addSeries(s)
-  	  r.setSeriesPaint( _actualKey, _mapColores.get(vehiculo.interseccionDestino.nombre.get).getOrElse(java.awt.Color.BLACK) )
+  	  r.setSeriesPaint( _actualKey, _mapColores.get(viaje.interseccionDestino.nombre.get).getOrElse(java.awt.Color.BLACK) )
   	  vehiculo match { 
   	    case vehiculo: Carro => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiagonalCross(7, 1f)) // primer arg es tamano 2 es grosor
   	    case vehiculo: Camion => r.setSeriesShape(_actualKey, org.jfree.util.ShapeUtilities.createDiamond(7)) // primer argumento es el tamano
