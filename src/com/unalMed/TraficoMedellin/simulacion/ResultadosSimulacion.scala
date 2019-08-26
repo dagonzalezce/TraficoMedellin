@@ -123,12 +123,12 @@ object ResultadosSimulacion{
   def totalViasDobleSentido(): Int= Simulacion.vias.filter(_.sentido.nombre == "dobleVia").size
   def velocidadMinima(): Double= {
     var velocidades: ArrayBuffer[Double] = ArrayBuffer()
-    Simulacion.vias.foreach(x=> velocidades+=x.velmax)
+    Simulacion.vias.foreach(x=> velocidades+=x.velMax)
     velocidades.reduce(Math.min(_,_))
   }
   def velocidadMaxima(): Double= {
     var velocidades: ArrayBuffer[Double] = ArrayBuffer()
-    Simulacion.vias.foreach(x=> velocidades+=x.velmax)
+    Simulacion.vias.foreach(x=> velocidades+=x.velMax)
     velocidades.reduce(Math.max(_,_))
   }
   def longitudPromedioVias(): Double={

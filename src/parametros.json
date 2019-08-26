@@ -21,6 +21,14 @@
 "minTiempoVerde": 100,
 "maxTiempoVerde": 200,
 "tiempoAmarillo": 50
+},
+"aceleracion": { 
+"minimo": 5,
+"maximo": 20 
+},
+"distanciasFrenadoVehiculos": {
+"XSemaforoFrenar": 40,
+"XSemaforoAmarilloContinuar": 20
 }
 }
 }

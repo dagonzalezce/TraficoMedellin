@@ -15,12 +15,17 @@ object ArchivosJson {
   val parametros : Parametro = cargarDatos(ruta+archivo)
   
     
-  case class Parametro(dt: Int, tRefresh: Int, vehiculos: PVehiculo, velocidad: PVelocidad, proporciones: PProporciones, semaforos: PSemaforos)
+
+  case class Parametro(dt: Int, tRefresh: Int, vehiculos: PVehiculo, velocidad: PVelocidad, proporciones: PProporciones, semaforos: PSemaforos,
+                       aceleracion: PAceleracion,distanciasFrenadoVehiculos: PDistanciasFrenadoVehiculos)
   case class PVehiculo(minimo: Int, maximo: Int)
   case class PVelocidad(minimo: Int, maximo: Int)
   case class PProporciones(carros: Double, motos: Double, buses: Double, camiones: Double, motoTaxis: Double)
   case class PSemaforos(minTiempoVerde: Int, maxTiempoVerde: Int, tiempoAmarillo: Int)
-  
+  case class PAceleracion(minimo: Int, maximo: Int)
+  case class PDistanciasFrenadoVehiculos(XSemaforoFrenar: Int, XSemaforoAmarilloContinuar: Int)
+   
+
   def cargarDatos(archivo: String) : Parametro = {
     val cadena = Source.fromFile(archivo).getLines.mkString
     val json = parse(cadena)
@@ -37,5 +42,4 @@ object ArchivosJson {
     pw.write(write(resultados))
     pw.close
   }
-  
 }
