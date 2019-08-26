@@ -5,6 +5,8 @@ import com.unalMed.TraficoMedellin.movil._
 import com.unalMed.TraficoMedellin.geometria._
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
+import com.unalMed.TraficoMedellin.movil.Comparendo
+import com.unalMed.TraficoMedellin.vias.CamaraFotoDeteccion
 
 import com.unalMed.TraficoMedellin.geometria.Grafico
 
@@ -137,7 +139,7 @@ object Simulacion extends Runnable{
   }
   
   
-  def crearVias() : ArrayBuffer[Via] ={
+  def crearVias() : ArrayBuffer[Via] ={ // no modifico esto porque hay que pasarlo al neo4j
     ArrayBuffer(
     new Via(niquia, lauraAuto, 80, TipoVia("Carrera"), Sentido.dobleVia, "64C", "Auto Norte"),
     new Via(niquia, lauraReg, 80, TipoVia("Carrera"), Sentido.dobleVia, "62", "Regional"),
@@ -211,4 +213,6 @@ object Simulacion extends Runnable{
     new Via(viva, pqEnv, 60, TipoVia("Calle"), Sentido.dobleVia, "37S", "37S"),
     new Via(viva, gu_37S, 60, TipoVia("Calle"), Sentido.dobleVia, "63", "37S"))
   }
+  
+    val listaComparendos:ArrayBuffer[Comparendo]=ArrayBuffer[Comparendo]()  // aun no he creado fotomultas :(
 }
