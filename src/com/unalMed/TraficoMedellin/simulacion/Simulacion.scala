@@ -23,6 +23,10 @@ object Simulacion extends Runnable{
   val proporcionBuses: Double= ArchivosJson.parametros.proporciones.buses
   val proporcionCamiones: Double= ArchivosJson.parametros.proporciones.camiones
   val proporcionMotoTaxis: Double= ArchivosJson.parametros.proporciones.motoTaxis
+  
+  val minTiempoVerde: Int= ArchivosJson.parametros.semaforos.minTiempoVerde
+  val maxTiempoVerde: Int= ArchivosJson.parametros.semaforos.maxTiempoVerde
+  val tiempoAmarillo: Int= ArchivosJson.parametros.semaforos.tiempoAmarillo
 
   val niquia = new Interseccion(300, 12000, Some("Niquia"))
   val lauraAuto = new Interseccion(2400, 11400, Some("M. Laura Auto"))
@@ -67,6 +71,24 @@ object Simulacion extends Runnable{
   val gu_37S = new Interseccion(21000, 12000, Some("Guay con 37S"))
   val intersecciones = crearIntersecciones()
   val vias = crearVias()
+  val semaforos = ArrayBuffer[Semaforo]()
+  vias.foreach(x=>{
+          val tiempoVerde= minTiempoVerde+Random.nextInt(maxTiempoVerde-minTiempoVerde)
+          print(tiempoVerde)
+          semaforos+= new Semaforo(tiempoVerde,tiempoAmarillo,x,x.puntoFinal)
+          if(x.sentido.nombre == "dobleVia" ){
+            val tiempoVerde2= minTiempoVerde+Random.nextInt(maxTiempoVerde-minTiempoVerde)
+            semaforos+= new Semaforo(tiempoVerde2,tiempoAmarillo,x,x.puntoInicio)  
+          }
+      }
+    )
+   val nodosSemaforos= ArrayBuffer[NodoSemaforo]()
+   intersecciones.foreach(i=>{
+       nodosSemaforos+= new NodoSemaforo(semaforos.filter(_.nodo == i))
+   })
+   
+  
+ 
   //val vehiculos = crearVehiculos()
   var t=0
   var tiempoInicio= 0L
@@ -78,11 +100,11 @@ object Simulacion extends Runnable{
   
     def run(){
     estado = false
-    var dt = 10
-    var tRefresh = 120 // t refresh de 1 mata la grafica
     while (true) {
       if( estado ){
         vehiculos.foreach(_.mover(dt))
+        nodosSemaforos.foreach(_.controlarFlujo(dt))
+                
         t += dt
         Grafico.graficarVehiculos(vehiculos)
         Thread.sleep(tRefresh)

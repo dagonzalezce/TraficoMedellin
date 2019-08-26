@@ -8,8 +8,10 @@ class Via (val puntoInicio: Interseccion, val puntoFinal: Interseccion, val velm
     val origen = puntoInicio
     val fin = puntoFinal
     
+    
    
     
+    def nombre= _nombre
     
     def longitud = Math.sqrt(Math.pow((fin.x - origen.x),2) + Math.pow((fin.y - origen.y),2))
     

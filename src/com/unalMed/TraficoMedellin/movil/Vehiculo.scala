@@ -18,26 +18,34 @@ abstract case class Vehiculo ( val interseccionOrigen: Interseccion, val interse
   private var siguienteInterseccion : Interseccion = interseccionOrigen
   private var viaActual : Via=trayectoVias.dequeue
   posicion= interseccionOrigen
-  
+  if(posicion == viaActual.origen){
+          siguienteInterseccion= viaActual.fin
+        }else if(posicion == viaActual.fin){
+          siguienteInterseccion= viaActual.origen
+        }
   
   def mover(dt: Int){
-    if(llegoADestino) return
-    if (posicion == interseccionDestino) return
-    
-    if(posicion == viaActual.origen){
-      siguienteInterseccion= viaActual.fin
-      
-    }else if(posicion == viaActual.fin){
-      siguienteInterseccion= viaActual.origen
+   if(cercaDeInterseccion(siguienteInterseccion, dt)){
+      posicion= siguienteInterseccion.asInstanceOf[Punto]
+      if(llegoADestino) return
+      var estaEnVerde=false
+      Simulacion.semaforos.filter(_.nodo==siguienteInterseccion).filter(_.via.nombre == viaActual.nombre)
+        .foreach(x=> if(x.estado== "Verde") {estaEnVerde=true})
+      if(estaEnVerde){
+        if(!trayectoVias.isEmpty) viaActual= trayectoVias.dequeue
+        if(posicion == viaActual.origen){
+          siguienteInterseccion= viaActual.fin
+        }else if(posicion == viaActual.fin){
+          siguienteInterseccion= viaActual.origen
+        }
+      }else{
+        return
       }
+    }
     velocidad.angulo= new Angulo(posicion.calcularAnguloA(siguienteInterseccion))
     moverUniformemente(dt)
-    if(cercaDeInterseccion(siguienteInterseccion, dt)){
-      posicion= siguienteInterseccion.asInstanceOf[Punto]
-      if(!trayectoVias.isEmpty) viaActual= trayectoVias.dequeue
-      }    
-  }
- 
+  } 
+  
   
   def cercaDeInterseccion(interseccion: Interseccion, dt:Int): Boolean={
     var distancia= Math.sqrt(Math.pow((posicion.x - interseccion.x),2) + Math.pow((posicion.y - interseccion.y),2))
