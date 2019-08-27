@@ -330,7 +330,7 @@ CREATE (unsentido: Sentido {nombre: 'UnaVia'}),
 
 	(v71:Via {velMax:60, numero:'63', nombre:'37S'}),
 	(v71)-[:TIENE_SENTIDO]->(doblesentido), (v71)-[:ES_TIPO_VIA]->(TipoCalle),
-	(v71)-[:INICIA_EN]->(viva), (v71)-[:TERMINA_EN]->(gu_37S)
+	(v71)-[:INICIA_EN]->(viva), (v71)-[:TERMINA_EN]->(gu_37S),
 	
 	(C1:CamaraFotoMulta {distanciaOrigen: 200}),
 	(C2:CamaraFotoMulta {distanciaOrigen: 200}),
