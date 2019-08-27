@@ -1,0 +1,336 @@
+CREATE (unsentido: Sentido {nombre: 'UnaVia'}),
+	(doblesentido: Sentido {nombre: 'DobleVia'}),
+	(TipoCarrera: TipoVia{nombre:'Carrera'}),
+	(TipoCalle: TipoVia{nombre:'Calle'}),
+	(TipoDiagonal: TipoVia{nombre:'Diagonal'}),
+	(TipoTransversal: TipoVia{nombre:'Transversal'}),
+
+	(niquia: Interseccion{cx:300, cy:12000, nombre:"Niquia"}),
+	(lauraAuto: Interseccion{cx:2400, cy:11400, nombre:"M. Laura Auto"}),
+	(lauraReg: Interseccion{cx:2400, cy:12600, nombre:"M. Laura Reg"}),
+	(ptoCero: Interseccion{cx:5400, cy:12000, nombre:"Pto 0"}),
+	(mino: Interseccion{cx:6300, cy:15000, nombre:"Minorista"}),
+	(villa: Interseccion{cx:6300, cy:19500, nombre:"Villanueva"}),
+	(ig65: Interseccion{cx:5400, cy:10500, nombre:"65 Igu"}),
+	(robledo: Interseccion{cx:5400, cy:1500, nombre:"Exito Rob"}),
+	(colReg: Interseccion{cx:8250, cy:12000, nombre:"Col Reg"}),
+	(col65: Interseccion{cx:8250, cy:10500, nombre:"Col 65"}),
+	(col80: Interseccion{cx:8250, cy:1500, nombre:"Col 80"}),
+	(juanOr: Interseccion{cx:10500, cy:19500, nombre:"Sn Juan Ori"}),
+	(maca: Interseccion{cx:10500, cy:12000, nombre:"Macarena"}),
+	(expo: Interseccion{cx:12000, cy:13500, nombre:"Exposiciones"}),
+	(reg30: Interseccion{cx:13500, cy:15000, nombre:"Reg 30"}),
+	(monte: Interseccion{cx:16500, cy:15000, nombre:"Monterrey"}),
+	(agua: Interseccion{cx:19500, cy:15000, nombre:"Aguacatala"}),
+	(viva: Interseccion{cx:21000, cy:15000, nombre:"Viva Env"}),
+	(mayor: Interseccion{cx:23400, cy:15000, nombre:"Mayorca"}),
+	(ferrCol: Interseccion{cx:8250, cy:15000, nombre:"Ferr Col"}),
+	(ferrJuan: Interseccion{cx:10500, cy:15000, nombre:"Alpujarra"}),
+	(sanDiego: Interseccion{cx:12000, cy:19500, nombre:"San Diego"}),
+	(premium: Interseccion{cx:13500, cy:19500, nombre:"Premium"}),
+	(pp: Interseccion{cx:16500, cy:19500, nombre:"Parque Pob"}),
+	(santafe: Interseccion{cx:19500, cy:18750, nombre:"Santa Fe"}),
+	(pqEnv: Interseccion{cx:21000, cy:18000, nombre:"Envigado"}),
+	(juan65: Interseccion{cx:10500, cy:10500, nombre:"Juan 65"}),
+	(juan80: Interseccion{cx:10500, cy:1500, nombre:"Juan 80"}),
+	(_33_65: Interseccion{cx:12000, cy:10500, nombre:"33 con 65"}),
+	(bule: Interseccion{cx:12000, cy:7500, nombre:"Bulerias"}),
+	(gema: Interseccion{cx:12000, cy:1500, nombre:"St Gema"}),
+	(_30_65: Interseccion{cx:13500, cy:10500, nombre:"30 con 65"}),
+	(_30_70: Interseccion{cx:13500, cy:4500, nombre:"30 con 70"}),
+	(_30_80: Interseccion{cx:13500, cy:1500, nombre:"30 con 80"}),
+	(bol65: Interseccion{cx:11000, cy:10500, nombre:"Boliv con 65"}),
+	(gu10: Interseccion{cx:16500, cy:12000, nombre:"Guay con 10"}),
+	(terminal: Interseccion{cx:16500, cy:10500, nombre:"Term Sur"}),
+	(gu30: Interseccion{cx:13500, cy:12000, nombre:"Guay 30"}),
+	(gu80: Interseccion{cx:19500, cy:12000, nombre:"Guay 80"}),
+	(_65_80: Interseccion{cx:19500, cy:10500, nombre:"65 con 30"}),
+	(gu_37S: Interseccion{cx:21000, cy:12000, nombre:"Guay con 37S"}),
+	
+
+	(v1:Via {velMax:80, numero:'64C', nombre:'Auto Norte'}),
+	(v1)-[:TIENE_SENTIDO]->(doblesentido), (v1)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v1)-[:INICIA_EN]->(niquia), (v1)-[:TERMINA_EN]->(lauraAuto),
+
+	(v2:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v2)-[:TIENE_SENTIDO]->(doblesentido), (v2)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v2)-[:INICIA_EN]->(niquia), (v2)-[:TERMINA_EN]->(lauraReg),	
+
+	(v3:Via {velMax:60, numero:'94', nombre:'Pte Madre Laura'}),
+	(v3)-[:TIENE_SENTIDO]->(doblesentido), (v3)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v3)-[:INICIA_EN]->(lauraAuto), (v3)-[:TERMINA_EN]->(lauraReg),
+	
+	(v4:Via {velMax:80, numero:'64C', nombre:'Auto Norte'}),
+	(v4)-[:TIENE_SENTIDO]->(doblesentido), (v4)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v4)-[:INICIA_EN]->(lauraAuto), (v4)-[:TERMINA_EN]->(ptoCero),
+	
+	(v5:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v5)-[:TIENE_SENTIDO]->(doblesentido), (v5)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v5)-[:INICIA_EN]->(lauraReg), (v5)-[:TERMINA_EN]->(ptoCero),
+
+	(v6:Via {velMax:60, numero:'58', nombre:'Oriental'}),
+	(v6)-[:TIENE_SENTIDO]->(doblesentido), (v6)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v6)-[:INICIA_EN]->(ptoCero), (v6)-[:TERMINA_EN]->(mino),
+
+	(v7:Via {velMax:60, numero:'58', nombre:'Oriental'}),
+	(v7)-[:TIENE_SENTIDO]->(doblesentido), (v7)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v7)-[:INICIA_EN]->(mino), (v7)-[:TERMINA_EN]->(villa),
+
+	(v8:Via {velMax:60, numero:'55', nombre:'Iguaná'}),
+	(v8)-[:TIENE_SENTIDO]->(doblesentido), (v8)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v8)-[:INICIA_EN]->(ptoCero), (v8)-[:TERMINA_EN]->(ig65),
+
+	(v9:Via {velMax:60, numero:'55', nombre:'Iguaná'}),
+	(v9)-[:TIENE_SENTIDO]->(doblesentido), (v9)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v9)-[:INICIA_EN]->(ig65), (v9)-[:TERMINA_EN]->(robledo),
+
+	(v10:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v10)-[:TIENE_SENTIDO]->(doblesentido), (v10)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v10)-[:INICIA_EN]->(ptoCero), (v10)-[:TERMINA_EN]->(colReg),
+
+	(v11:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v11)-[:TIENE_SENTIDO]->(doblesentido), (v11)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v11)-[:INICIA_EN]->(colReg), (v11)-[:TERMINA_EN]->(maca),
+
+	(v12:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v12)-[:TIENE_SENTIDO]->(doblesentido), (v12)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v12)-[:INICIA_EN]->(maca), (v12)-[:TERMINA_EN]->(expo),
+
+	(v13:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v13)-[:TIENE_SENTIDO]->(doblesentido), (v13)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v13)-[:INICIA_EN]->(expo), (v13)-[:TERMINA_EN]->(reg30),	
+
+	(v14:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v14)-[:TIENE_SENTIDO]->(doblesentido), (v14)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v14)-[:INICIA_EN]->(reg30), (v14)-[:TERMINA_EN]->(monte),
+	
+	(v15:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v15)-[:TIENE_SENTIDO]->(doblesentido), (v15)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v15)-[:INICIA_EN]->(monte), (v15)-[:TERMINA_EN]->(agua),
+
+	(v16:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v16)-[:TIENE_SENTIDO]->(doblesentido), (v16)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v16)-[:INICIA_EN]->(agua), (v16)-[:TERMINA_EN]->(viva),
+
+	(v17:Via {velMax:80, numero:'62', nombre:'Regional'}),
+	(v17)-[:TIENE_SENTIDO]->(doblesentido), (v17)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v17)-[:INICIA_EN]->(viva), (v17)-[:TERMINA_EN]->(mayor),
+
+	(v18:Via {velMax:60, numero:'55', nombre:'Ferrocarril'}),
+	(v18)-[:TIENE_SENTIDO]->(doblesentido), (v18)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v18)-[:INICIA_EN]->(mino), (v18)-[:TERMINA_EN]->(ferrCol),
+
+	(v19:Via {velMax:60, numero:'55', nombre:'Ferrocarril'}),
+	(v19)-[:TIENE_SENTIDO]->(doblesentido), (v19)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v19)-[:INICIA_EN]->(ferrCol), (v19)-[:TERMINA_EN]->(ferrJuan),
+
+	(v20:Via {velMax:60, numero:'55', nombre:'Ferrocarril'}),
+	(v20)-[:TIENE_SENTIDO]->(doblesentido), (v20)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v20)-[:INICIA_EN]->(ferrJuan), (v20)-[:TERMINA_EN]->(expo),
+
+	(v21:Via {velMax:60, numero:'46', nombre:'Oriental'}),
+	(v21)-[:TIENE_SENTIDO]->(doblesentido), (v21)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v21)-[:INICIA_EN]->(villa), (v21)-[:TERMINA_EN]->(juanOr),
+
+	(v22:Via {velMax:60, numero:'46', nombre:'Oriental'}),
+	(v22)-[:TIENE_SENTIDO]->(doblesentido), (v22)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v22)-[:INICIA_EN]->(juanOr), (v22)-[:TERMINA_EN]->(sanDiego),
+
+	(v23:Via {velMax:60, numero:'43A', nombre:'Av Pob'}),
+	(v23)-[:TIENE_SENTIDO]->(doblesentido), (v23)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v23)-[:INICIA_EN]->(sanDiego), (v23)-[:TERMINA_EN]->(premium),
+
+	(v24:Via {velMax:60, numero:'43A', nombre:'Av Pob'}),
+	(v24)-[:TIENE_SENTIDO]->(doblesentido), (v24)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v24)-[:INICIA_EN]->(premium), (v24)-[:TERMINA_EN]->(pp),
+
+	(v25:Via {velMax:60, numero:'43A', nombre:'Av Pob'}),
+	(v25)-[:TIENE_SENTIDO]->(doblesentido), (v25)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v25)-[:INICIA_EN]->(pp), (v25)-[:TERMINA_EN]->(santafe),
+
+	(v26:Via {velMax:60, numero:'43A', nombre:'Av Pob'}),
+	(v26)-[:TIENE_SENTIDO]->(doblesentido), (v26)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v26)-[:INICIA_EN]->(santafe), (v26)-[:TERMINA_EN]->(pqEnv),
+
+	(v27:Via {velMax:60, numero:'43A', nombre:'Av Pob'}),
+	(v27)-[:TIENE_SENTIDO]->(doblesentido), (v27)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v27)-[:INICIA_EN]->(pqEnv), (v27)-[:TERMINA_EN]->(mayor),
+
+	(v28:Via {velMax:60, numero:'450', nombre:'Colombia'}),
+	(v28)-[:TIENE_SENTIDO]->(doblesentido), (v28)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v28)-[:INICIA_EN]->(ferreCol), (v28)-[:TERMINA_EN]->(colReg),
+
+	(v29:Via {velMax:60, numero:'450', nombre:'Colombia'}),
+	(v29)-[:TIENE_SENTIDO]->(doblesentido), (v29)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v29)-[:INICIA_EN]->(colReg), (v29)-[:TERMINA_EN]->(col65),
+
+	(v30:Via {velMax:60, numero:'450', nombre:'Colombia'}),
+	(v30)-[:TIENE_SENTIDO]->(doblesentido), (v30)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v30)-[:INICIA_EN]->(col65), (v29)-[:TERMINA_EN]->(col80),
+
+	(v31:Via {velMax:60, numero:'44', nombre:'Sn Juan'}),
+	(v31)-[:TIENE_SENTIDO]->(doblesentido), (v31)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v31)-[:INICIA_EN]->(juanOr), (v31)-[:TERMINA_EN]->(ferrJuan),
+
+	(v32:Via {velMax:60, numero:'44', nombre:'Sn Juan'}),
+	(v32)-[:TIENE_SENTIDO]->(doblesentido), (v32)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v32)-[:INICIA_EN]->(ferrJuan), (v32)-[:TERMINA_EN]->(maca),
+
+	(v33:Via {velMax:60, numero:'44', nombre:'Sn Juan'}),
+	(v33)-[:TIENE_SENTIDO]->(doblesentido), (v33)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v33)-[:INICIA_EN]->(maca), (v33)-[:TERMINA_EN]->(juan65),
+	
+	(v34:Via {velMax:60, numero:'44', nombre:'Sn Juan'}),
+	(v34)-[:TIENE_SENTIDO]->(doblesentido), (v34)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v34)-[:INICIA_EN]->(juan65), (v34)-[:TERMINA_EN]->(juan80),
+
+	(v35:Via {velMax:60, numero:'33', nombre:'33'}),
+	(v35)-[:TIENE_SENTIDO]->(doblesentido), (v35)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v35)-[:INICIA_EN]->(sanDiego), (v35)-[:TERMINA_EN]->(expo),
+
+	(v36:Via {velMax:60, numero:'33', nombre:'33'}),
+	(v36)-[:TIENE_SENTIDO]->(doblesentido), (v36)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v36)-[:INICIA_EN]->(expo), (v36)-[:TERMINA_EN]->(_33_65),
+
+	(v37:Via {velMax:60, numero:'33', nombre:'33'}),
+	(v37)-[:TIENE_SENTIDO]->(doblesentido), (v37)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v37)-[:INICIA_EN]->(_33_65), (v37)-[:TERMINA_EN]->(bule),
+
+	(v38:Via {velMax:60, numero:'33', nombre:'33'}),
+	(v38)-[:TIENE_SENTIDO]->(doblesentido), (v38)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v38)-[:INICIA_EN]->(bule), (v38)-[:TERMINA_EN]->(gema),
+
+	(v39:Via {velMax:60, numero:'30', nombre:'30'}),
+	(v39)-[:TIENE_SENTIDO]->(doblesentido), (v39)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v39)-[:INICIA_EN]->(premium), (v39)-[:TERMINA_EN]->(reg30),
+
+	(v40:Via {velMax:60, numero:'30', nombre:'30'}),
+	(v40)-[:TIENE_SENTIDO]->(doblesentido), (v40)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v40)-[:INICIA_EN]->(reg30), (v40)-[:TERMINA_EN]->(_30_65),
+
+	(v41:Via {velMax:60, numero:'30', nombre:'30'}),
+	(v41)-[:TIENE_SENTIDO]->(doblesentido), (v41)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v41)-[:INICIA_EN]->(_30_65), (v41)-[:TERMINA_EN]->(_30_70),
+
+	(v42:Via {velMax:60, numero:'30', nombre:'30'}),
+	(v42)-[:TIENE_SENTIDO]->(doblesentido), (v42)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v42)-[:INICIA_EN]->(_30_70), (v42)-[:TERMINA_EN]->(_30_80),
+
+	(v43:Via {velMax:60, numero:'74B', nombre:'Boliv'}),
+	(v43)-[:TIENE_SENTIDO]->(doblesentido), (v43)-[:ES_TIPO_VIA]->(TipoDiagonal),
+	(v43)-[:INICIA_EN]->(maca), (v43)-[:TERMINA_EN]->(bol65),
+
+	(v44:Via {velMax:60, numero:'74B', nombre:'Boliv'}),
+	(v44)-[:TIENE_SENTIDO]->(doblesentido), (v44)-[:ES_TIPO_VIA]->(TipoDiagonal),
+	(v44)-[:INICIA_EN]->(bol65), (v44)-[:TERMINA_EN]->(bule),
+
+	(v45:Via {velMax:60, numero:'74B', nombre:'Boliv'}),
+	(v45)-[:TIENE_SENTIDO]->(doblesentido), (v45)-[:ES_TIPO_VIA]->(TipoDiagonal),
+	(v45)-[:INICIA_EN]->(bule), (v45)-[:TERMINA_EN]->(_30_70),
+
+	(v46:Via {velMax:60, numero:'39B', nombre:'Nutibara'}),
+	(v46)-[:TIENE_SENTIDO]->(doblesentido), (v46)-[:ES_TIPO_VIA]->(TipoTransversal),
+	(v46)-[:INICIA_EN]->(juan80), (v46)-[:TERMINA_EN]->(bule),
+
+	(v47:Via {velMax:60, numero:'10', nombre:'10'}),
+	(v47)-[:TIENE_SENTIDO]->(doblesentido), (v47)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v47)-[:INICIA_EN]->(pp), (v47)-[:TERMINA_EN]->(monte),
+
+	(v48:Via {velMax:60, numero:'10', nombre:'10'}),
+	(v48)-[:TIENE_SENTIDO]->(doblesentido), (v48)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v48)-[:INICIA_EN]->(monte), (v48)-[:TERMINA_EN]->(gu10),
+
+	(v49:Via {velMax:60, numero:'10', nombre:'10'}),
+	(v49)-[:TIENE_SENTIDO]->(doblesentido), (v49)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v49)-[:INICIA_EN]->(gu10), (v49)-[:TERMINA_EN]->(terminal),
+
+	(v50:Via {velMax:60, numero:'52', nombre:'Av Guay'}),
+	(v50)-[:TIENE_SENTIDO]->(doblesentido), (v50)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v50)-[:INICIA_EN]->(expo), (v50)-[:TERMINA_EN]->(gu30),
+
+	(v51:Via {velMax:60, numero:'52', nombre:'Av Guay'}),
+	(v51)-[:TIENE_SENTIDO]->(doblesentido), (v51)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v51)-[:INICIA_EN]->(gu30), (v51)-[:TERMINA_EN]->(gu10),
+
+	(v52:Via {velMax:60, numero:'52', nombre:'Av Guay'}),
+	(v52)-[:TIENE_SENTIDO]->(doblesentido), (v52)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v52)-[:INICIA_EN]->(gu10), (v52)-[:TERMINA_EN]->(gu80),
+
+	(v53:Via {velMax:60, numero:'52', nombre:'Av Guay'}),
+	(v53)-[:TIENE_SENTIDO]->(doblesentido), (v53)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v53)-[:INICIA_EN]->(gu80), (v53)-[:TERMINA_EN]->(gu_37S),
+
+	(v54:Via {velMax:60, numero:'65', nombre:'65'}),
+	(v54)-[:TIENE_SENTIDO]->(doblesentido), (v54)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v54)-[:INICIA_EN]->(lauraAuto), (v54)-[:TERMINA_EN]->(ig65),
+
+	(v55:Via {velMax:60, numero:'65', nombre:'65'}),
+	(v55)-[:TIENE_SENTIDO]->(doblesentido), (v55)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v55)-[:INICIA_EN]->(ig65), (v55)-[:TERMINA_EN]->(col65),
+
+	(v56:Via {velMax:60, numero:'65', nombre:'65'}),
+	(v56)-[:TIENE_SENTIDO]->(unsentido), (v56)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v56)-[:INICIA_EN]->(juan65), (v56)-[:TERMINA_EN]->(col65),
+
+	(v57:Via {velMax:60, numero:'65', nombre:'65'}),
+	(v57)-[:TIENE_SENTIDO]->(unsentido), (v57)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v57)-[:INICIA_EN]->(bol65), (v57)-[:TERMINA_EN]->(juan65),
+
+	(v58:Via {velMax:60, numero:'65', nombre:'65'}),
+	(v58)-[:TIENE_SENTIDO]->(unsentido), (v58)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v58)-[:INICIA_EN]->(_33_65), (v58)-[:TERMINA_EN]->(bol65),
+
+	(v59:Via {velMax:60, numero:'65', nombre:'65'}),
+	(v59)-[:TIENE_SENTIDO]->(unsentido), (v59)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v59)-[:INICIA_EN]->(_30_65), (v59)-[:TERMINA_EN]->(_33_65),
+
+	(v60:Via {velMax:60, numero:'65', nombre:'65'}),
+	(v60)-[:TIENE_SENTIDO]->(doblesentido), (v60)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v60)-[:INICIA_EN]->(_30_65), (v60)-[:TERMINA_EN]->(terminal),
+
+	(v61:Via {velMax:60, numero:'80', nombre:'65'}),
+	(v61)-[:TIENE_SENTIDO]->(doblesentido), (v61)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v61)-[:INICIA_EN]->(terminal), (v61)-[:TERMINA_EN]->(_65_80),
+
+	(v62:Via {velMax:60, numero:'80', nombre:'80'}),
+	(v62)-[:TIENE_SENTIDO]->(doblesentido), (v62)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v62)-[:INICIA_EN]->(robledo), (v62)-[:TERMINA_EN]->(col80),
+
+	(v63:Via {velMax:60, numero:'80', nombre:'80'}),
+	(v63)-[:TIENE_SENTIDO]->(doblesentido), (v63)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v63)-[:INICIA_EN]->(col80), (v63)-[:TERMINA_EN]->(juan80),
+
+	(v64:Via {velMax:60, numero:'80', nombre:'80'}),
+	(v64)-[:TIENE_SENTIDO]->(doblesentido), (v64)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v64)-[:INICIA_EN]->(juan80), (v64)-[:TERMINA_EN]->(gema),
+
+	(v65:Via {velMax:60, numero:'80', nombre:'80'}),
+	(v65)-[:TIENE_SENTIDO]->(doblesentido), (v65)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v65)-[:INICIA_EN]->(gema), (v65)-[:TERMINA_EN]->(_30_80),
+
+	(v66:Via {velMax:60, numero:'80', nombre:'80'}),
+	(v66)-[:TIENE_SENTIDO]->(doblesentido), (v66)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v66)-[:INICIA_EN]->(_30_80), (v66)-[:TERMINA_EN]->(_65_80),
+
+	(v67:Via {velMax:60, numero:'80', nombre:'80'}),
+	(v67)-[:TIENE_SENTIDO]->(doblesentido), (v67)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v67)-[:INICIA_EN]->(_65_80), (v67)-[:TERMINA_EN]->(gu80),
+
+	(v68:Via {velMax:60, numero:'80', nombre:'80'}),
+	(v68)-[:TIENE_SENTIDO]->(doblesentido), (v68)-[:ES_TIPO_VIA]->(TipoCarrera),
+	(v68)-[:INICIA_EN]->(gu80), (v68)-[:TERMINA_EN]->(agua),
+
+	(v69:Via {velMax:60, numero:'12S', nombre:'80'}),
+	(v69)-[:TIENE_SENTIDO]->(doblesentido), (v69)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v69)-[:INICIA_EN]->(agua), (v69)-[:TERMINA_EN]->(santafe),
+
+	(v70:Via {velMax:60, numero:'37S', nombre:'37S'}),
+	(v70)-[:TIENE_SENTIDO]->(doblesentido), (v70)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v70)-[:INICIA_EN]->(viva), (v70)-[:TERMINA_EN]->(pqEnv),
+
+	(v71:Via {velMax:60, numero:'63', nombre:'37S'}),
+	(v71)-[:TIENE_SENTIDO]->(doblesentido), (v71)-[:ES_TIPO_VIA]->(TipoCalle),
+	(v71)-[:INICIA_EN]->(viva), (v71)-[:TERMINA_EN]->(gu_37S)
+
+
+
