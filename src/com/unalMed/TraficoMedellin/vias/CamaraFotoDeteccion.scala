@@ -13,6 +13,15 @@ class CamaraFotoDeteccion (val via:Via, distanciaOrigen: Double, val ubicacion: 
       val comparendo = new Comparendo(vehiculo, velocidad, via.velMax)
       Simulacion.listaComparendos += comparendo        
     }    
-  }  
+  } 
+  
+   def calcularUbicacion(): Punto = { 
+
+    val angulo = via.calcularAnguloRecta().toRadians
+
+    val y = via.origen.y+(distanciaOrigen*Math.sin(angulo)).toInt
+    val x = via.origen.x+(distanciaOrigen*Math.cos(angulo)).toInt
+    Punto(x, y)
      
+  }
 }
