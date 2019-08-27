@@ -42,7 +42,7 @@ class Viaje (val interseccionOrigen: Interseccion, val interseccionDestino: Inte
         return
       }
     }
-    vehiculo.velocidadMax.angulo= new Angulo(vehiculo.posicion.calcularAnguloA(siguienteInterseccion))
+    vehiculo.velocidadAct.angulo= new Angulo(vehiculo.posicion.calcularAnguloA(siguienteInterseccion))
     vehiculo.mover(dt)
   }
   

@@ -179,7 +179,7 @@ object Conexion {
   	    case vehiculo: MotoTaxi => "tipo: 'MotoTaxi'})"
   	  
     }
-    val script2 = s"CREATE (:Vehiculo{x:${vehiculo.posicion.x},y:${vehiculo.posicion.y},velocidad:${vehiculo.velocidad.magnitud}, aceleracion:${vehiculo.aceleracion.magnitud}', placa:'${vehiculo.placa}"+script1
+    val script2 = s"CREATE (:Vehiculo{x:${vehiculo.posicion.x},y:${vehiculo.posicion.y},velocidad:${vehiculo.velocidadMax.magnitud}, aceleracion:${vehiculo.aceleracion.magnitud}', placa:'${vehiculo.placa}"+script1
     val result = session.run(script2)
     session.close()
     driver.close()
