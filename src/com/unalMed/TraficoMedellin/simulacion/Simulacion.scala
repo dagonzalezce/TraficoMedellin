@@ -85,12 +85,9 @@ object Simulacion extends Runnable{
         if(llegaronTodos && !vehiculos.isEmpty) ArchivosJson.escribirArchivo(ResultadosSimulacion())
       }
       print("") //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
-<<<<<<< HEAD
-     }
-=======
+
       
     }
->>>>>>> 97ef839906bbb2a0b2edd8b1f0e80273d6ef146a
     
   }
 
