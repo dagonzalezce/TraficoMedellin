@@ -6,6 +6,7 @@ import com.unalMed.TraficoMedellin.simulacion._
 import com.unalMed.TraficoMedellin.geometria._
 import scalax.collection.mutable.{AdjacencyListGraph$EdgeImpl => Edge}
 import scala.collection.mutable.Queue
+import com.unalMed.TraficoMedellin.geometria.MovimientoUniformeAcelerado
 
 
 abstract case class Vehiculo (val ve: Velocidad, val acel: Aceleracion) 

@@ -31,6 +31,25 @@ object Conexion {
     (driver, session)
   }
 
+  def guardarDatos(){
+    borrarDatos()
+    insertarVehiculos()
+    insertarViajes()
+  }
+  
+  def borrarDatos(){
+    val (driver, session) = getSession()
+    var script ="""match (v:Vehiculo)-[r]-()
+                match (v2:Vehiculo)
+                match (vi:Viaje)-[r2]-()
+                match (vi2:Viaje)
+                delete r,r2,v2,vi2""" 
+    var result = session.run(script)
+    session.close()
+    driver.close()
+    
+  }
+  
   def getIntersecciones(): ArrayBuffer[Interseccion] ={
     val (driver, session) = getSession()
     val script = s"MATCH (i:Interseccion) RETURN i"
@@ -148,15 +167,15 @@ object Conexion {
   def getVia(pOrigen: Punto, pDestino: Punto):Via={
     Simulacion.vias.filter(x=> x.origen==pOrigen && x.fin==pDestino)(0)
   }
-  def insertarViaje(viaje: Viaje)={
+  def insertarViajes()={
     val (driver, session) = getSession()
-    
-    val script = s"""MATCH (ve: Vehiculo{placa: '${viaje.vehiculo.placa}'})
-                     MATCH (io: Interseccion{cx:'${viaje.interseccionOrigen.x}', cy:'${viaje.interseccionOrigen.y}'})  
-                     MATCH (id: Interseccion{cx:'${viaje.interseccionDestino.x}', cy:'${viaje.interseccionDestino.y}'})  
-                     MATCH (siguienteInterseccion: Interseccion{cx:'${viaje.siguienteInterseccion.x}', cy:'${viaje.siguienteInterseccion.y}'})  
-                     MATCH (viaActual: Via)-[:INICIA_EN]->(:Interseccion{cx:'${viaje.viaActual.origen.x}', cy:'${viaje.viaActual.origen.y}'}) 
-                     MATCH (viaActual)-[:TERMINA_EN]->(:Interseccion{cx:'${viaje.viaActual.fin.x}', cy:'${viaje.viaActual.fin.y}'})                        
+    Simulacion.viajes.foreach(viaje=>{
+    var script = s"""MATCH (ve: Vehiculo{placa: '${viaje.vehiculo.placa}'})
+                     MATCH (io: Interseccion{cx:${viaje.interseccionOrigen.x}, cy:${viaje.interseccionOrigen.y}})  
+                     MATCH (id: Interseccion{cx:${viaje.interseccionDestino.x}, cy:${viaje.interseccionDestino.y}})  
+                     MATCH (siguienteInterseccion: Interseccion{cx:${viaje.siguienteInterseccion.x}, cy:${viaje.siguienteInterseccion.y}})  
+                     MATCH (viaActual: Via)-[:INICIA_EN]->(:Interseccion{cx:${viaje.viaActual.origen.x}, cy:${viaje.viaActual.origen.y}}) 
+                     MATCH (viaActual)-[:TERMINA_EN]->(:Interseccion{cx:${viaje.viaActual.fin.x}, cy:${viaje.viaActual.fin.y}})                        
                      CREATE (vi:Viaje{distanciaARecorrer:${viaje.distanciaARecorrer}}),
                      (vi)-[:DE_VEHICULO]->(ve),
                      (vi)-[:INICIA_EN]->(io),
@@ -164,14 +183,18 @@ object Conexion {
                      (vi)-[:CON_SIGUIENTE_INTERSECCION]->(siguienteInterseccion),
                      (vi)-[:EN_VIA_ACTUAL]->(viaActual)
                      """
-    val result = session.run(script)
+                     
+    var result = session.run(script)})
     session.close()
     driver.close()
   }
   
-  def insertarVehiculo(vehiculo: Vehiculo)={
+  def insertarVehiculos()={
     val (driver, session) = getSession()
-    val script1 = vehiculo match{
+    var script1 = ""
+    var script2 = ""
+    Simulacion.vehiculos.foreach(vehiculo=>{
+    script1= vehiculo match{
       case vehiculo: Carro => "tipo: 'Carro'})"
   	    case vehiculo: Camion => "tipo: 'Camion'})"
   	    case vehiculo: Bus => "tipo: 'Bus'})"
@@ -179,8 +202,8 @@ object Conexion {
   	    case vehiculo: MotoTaxi => "tipo: 'MotoTaxi'})"
   	  
     }
-    val script2 = s"CREATE (:Vehiculo{x:${vehiculo.posicion.x},y:${vehiculo.posicion.y},velocidad:${vehiculo.velocidadMax.magnitud}, aceleracion:${vehiculo.aceleracion.magnitud}', placa:'${vehiculo.placa}"+script1
-    val result = session.run(script2)
+    script2 = s"CREATE (:Vehiculo{x:${vehiculo.posicion.x},y:${vehiculo.posicion.y},velocidad:${vehiculo.velocidadMax.magnitud}, aceleracion:${vehiculo.aceleracion.magnitud}, placa:'${vehiculo.placa}', "+script1
+     var result = session.run(script2)})
     session.close()
     driver.close()
   }
