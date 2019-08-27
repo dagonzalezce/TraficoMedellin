@@ -15,6 +15,7 @@ import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 import com.unalMed.TraficoMedellin.simulacion.Simulacion
 import com.unalMed.TraficoMedellin.simulacion.Conexion
+import com.unalMed.TraficoMedellin.vias.CamaraFotoDeteccion
 
 
 /*
@@ -28,6 +29,7 @@ object Grafico {
   private var _numeroVias : Int = 0 //Variable para saber cuando acaban las vias y inicial los vehiculos en el dataset 
   private var _dataset: XYSeriesCollection = new XYSeriesCollection() //data set
   private var _actualKey: Int = 0
+  private var _numeroCamaras: Int = 0
   //private var _mapColores: scala.collection.mutable.Map[com.unalMed.TraficoMedellin.vias.Interseccion, java.awt.Color] = scala.collection.mutable.Map()
   private var _mapColores: scala.collection.mutable.Map[String, java.awt.Color] = scala.collection.mutable.Map()
   /*
@@ -71,7 +73,7 @@ object Grafico {
                            override def keyPressed( e : KeyEvent ): Unit = {
                              if( e.getKeyCode ==  KeyEvent.VK_F5 ){
                             	 s.reiniciar
-                            	 _actualKey = _numeroVias
+                            	 _actualKey = _numeroVias + _numeroCamaras
                              }
                              if( e.getKeyCode ==  KeyEvent.VK_F6 ){
                                println("Pausar simulacion")
@@ -111,7 +113,7 @@ object Grafico {
                         
   
   private def _limpiarVehiculos: Unit = {
-     val empiezanCarros = _numeroVias 
+     val empiezanCarros = _numeroVias + _numeroCamaras 
      while( _dataset.getSeriesCount > empiezanCarros  ){
     	 _dataset.removeSeries( empiezanCarros )
       }
@@ -150,7 +152,7 @@ object Grafico {
       //                                                           Random.nextFloat()*255) ) )
       //sP.getXYPlot.getAnnotations.get(_viaActual).asInstanceOf[XYTextAnnotation].setPaint(_mapColores.get(interseccion).getOrElse(java.awt.Color.BLACK)) 
      })
-    _actualKey = _numeroVias 
+    _actualKey = _numeroVias + _numeroCamaras
     println( _mapColores.mkString(",") )
     return
   }
@@ -177,5 +179,20 @@ object Grafico {
     })
     //println(_actualKey)
   }
+      def graficarCamarasFotoMultas(camaras : ArrayBuffer[CamaraFotoDeteccion]) = {
+    var cont: Int = _numeroVias
+    _numeroCamaras= camaras.length
+    camaras.foreach(camara =>{
+      var s = new XYSeries(cont)
+      s.add(camara.calcularUbicacion().x, camara.calcularUbicacion().y)
+      print("ubicacion : "+camara.calcularUbicacion())
+      print("VIA : "+  camara.via.calcularAnguloRecta().toRadians)
+     _dataset.addSeries(s) 
+     r.setSeriesPaint(cont, java.awt.Color.BLUE)
+     r.setSeriesShape(cont, org.jfree.util.ShapeUtilities.createRegularCross(0, 5f))
+     cont+=1
+     
+     })
+    }
   
 }
