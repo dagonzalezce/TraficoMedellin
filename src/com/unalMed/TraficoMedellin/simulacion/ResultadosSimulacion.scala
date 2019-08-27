@@ -70,17 +70,17 @@ object ResultadosSimulacion{
   
   def velocidadMinimaVehiculos():Double={
     var velocidades: ArrayBuffer[Double]= ArrayBuffer()
-    Simulacion.vehiculos.foreach(x=> velocidades+= Velocidad.aKilometrosPorHora(x.velocidad.magnitud))
+    Simulacion.vehiculos.foreach(x=> velocidades+= Velocidad.aKilometrosPorHora(x.velocidadMax.magnitud))
     velocidades.reduce(Math.min(_,_))
   }
   def velocidadMaximaVehiculos():Double={
     var velocidades: ArrayBuffer[Double]= ArrayBuffer()
-    Simulacion.vehiculos.foreach(x=> velocidades+= Velocidad.aKilometrosPorHora(x.velocidad.magnitud))
+    Simulacion.vehiculos.foreach(x=> velocidades+= Velocidad.aKilometrosPorHora(x.velocidadMax.magnitud))
     velocidades.reduce(Math.max(_,_))
   }
   def velocidadPromedioVehiculos():Double={
     var velocidades: ArrayBuffer[Double]= ArrayBuffer()
-    Simulacion.vehiculos.foreach(x=> velocidades+= Velocidad.aKilometrosPorHora(x.velocidad.magnitud))
+    Simulacion.vehiculos.foreach(x=> velocidades+= Velocidad.aKilometrosPorHora(x.velocidadMax.magnitud))
     velocidades.reduce(_+_)/Simulacion.vehiculos.size
   }
   

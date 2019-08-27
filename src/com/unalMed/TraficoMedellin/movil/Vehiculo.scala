@@ -9,12 +9,12 @@ import scala.collection.mutable.Queue
 
 
 abstract case class Vehiculo (val ve: Velocidad, val acel: Aceleracion) 
-                extends Movil(ve,acel) with MovimientoUniforme{
+                extends Movil(ve,acel) with MovimientoUniformeAcelerado{
   
   var placa: String
   
   def mover(dt: Int){
-    moverUniformemente(dt)
+    moverUniformementeAcelerado(dt)
   } 
 }
 

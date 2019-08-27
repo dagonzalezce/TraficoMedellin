@@ -9,7 +9,7 @@ class Bus(v: Velocidad, acel: Aceleracion) extends Vehiculo(v,acel){
   def generarPlacaAleatoria() : String ={
        Vehiculo.letrasAleatorias(3)+
                     Vehiculo.numerosAleatorios(3)
-}
+} 
 
 
 }
