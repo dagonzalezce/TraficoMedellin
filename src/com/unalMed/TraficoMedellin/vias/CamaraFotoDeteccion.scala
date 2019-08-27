@@ -6,7 +6,7 @@ import com.unalMed.TraficoMedellin.geometria.Punto
 
 class CamaraFotoDeteccion (val via:Via, distanciaOrigen: Double, val ubicacion: Punto){
   
-  
+    
   def medidorVelocidad (vehiculo:Vehiculo, velocidad: Double) {
     
     if (velocidad > via.velMax){
