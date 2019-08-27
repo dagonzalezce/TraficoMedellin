@@ -5,7 +5,7 @@ import com.unalMed.TraficoMedellin.vias._
 import com.unalMed.TraficoMedellin.geometria._
 
 class Moto(v:  Velocidad, acel: Aceleracion) extends Vehiculo(v,acel){
-  val placa: String= generarPlacaAleatoria()
+  var placa: String= generarPlacaAleatoria()
    
   def generarPlacaAleatoria() : String ={
        Vehiculo.letrasAleatorias(3)+

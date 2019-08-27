@@ -10,12 +10,12 @@ import scala.util.Random
 
 class Viaje (val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion, val vehiculo: Vehiculo){
   
-  vehiculo.posicion= interseccionOrigen
-  val trayectoVias = GrafoVia.caminoCorto(interseccionOrigen, interseccionDestino)
-  val distanciaARecorrer= calcularDistanciaARecorrer
+  if(vehiculo.posicion==Punto(0,0)) vehiculo.posicion= interseccionOrigen
+  var trayectoVias = GrafoVia.caminoCorto(interseccionOrigen, interseccionDestino)
+  var distanciaARecorrer= calcularDistanciaARecorrer
   
-  private var siguienteInterseccion : Interseccion = interseccionOrigen
-  private var viaActual : Via=trayectoVias.dequeue
+  var siguienteInterseccion : Interseccion = interseccionOrigen
+  var viaActual : Via=trayectoVias.dequeue
   if(vehiculo.posicion == viaActual.origen){
           siguienteInterseccion= viaActual.fin
         }else if(vehiculo.posicion == viaActual.fin){
