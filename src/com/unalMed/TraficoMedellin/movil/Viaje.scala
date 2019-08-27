@@ -7,6 +7,8 @@ import com.unalMed.TraficoMedellin.vias.Via
 import com.unalMed.TraficoMedellin.simulacion.Simulacion
 import com.unalMed.TraficoMedellin.geometria.Angulo
 import scala.util.Random
+import com.unalMed.TraficoMedellin.simulacion.ArchivosJson
+
 
 class Viaje (val interseccionOrigen: Interseccion, val interseccionDestino: Interseccion, val vehiculo: Vehiculo){
   
@@ -25,25 +27,43 @@ class Viaje (val interseccionOrigen: Interseccion, val interseccionDestino: Inte
   
   
   def avanzar(dt: Int){
+    
+      var estaEnVerde=false
+      var estaEnRojo=false
+      var estaEnAmarillo=false
     if(cercaDeInterseccion(siguienteInterseccion, dt)){
       vehiculo.posicion= siguienteInterseccion.asInstanceOf[Punto]
       if(llegoADestino) return
-      var estaEnVerde=false
       Simulacion.semaforos.filter(_.nodo==siguienteInterseccion).filter(_.via.nombre == viaActual.nombre)
         .foreach(x=> if(x.estado== "Verde") {estaEnVerde=true})
       if(estaEnVerde){
         if(!trayectoVias.isEmpty) viaActual= trayectoVias.dequeue
         if(vehiculo.posicion == viaActual.origen){
           siguienteInterseccion= viaActual.fin
-        }else if(vehiculo.posicion == viaActual.fin){
+        }else if(vehiculo.posicion == viaActual.fin){  
           siguienteInterseccion= viaActual.origen
         }
       }else{
+        vehiculo.velocidadAct.magnitud=0
         return
       }
     }
+    Simulacion.semaforos.filter(_.nodo==siguienteInterseccion).filter(_.via.nombre == viaActual.nombre)
+      .foreach(x=> if (x.estado== "Rojo") {estaEnRojo=true} else if (x.estado== "Amarillo") {estaEnAmarillo=true})
+    var distancia= Math.sqrt(Math.pow((vehiculo.posicion.x - siguienteInterseccion.x),2) + Math.pow((vehiculo.posicion.y - siguienteInterseccion.y),2))
+    distancia = Math.abs(distancia)  
     vehiculo.velocidadAct.angulo= new Angulo(vehiculo.posicion.calcularAnguloA(siguienteInterseccion))
-    vehiculo.mover(dt)
+    if ((distancia<Simulacion.XSemaforoFrenar) && (estaEnRojo || estaEnAmarillo)){
+      if ((distancia<Simulacion.XSemaforoAmarilloContinuar) && estaEnAmarillo) {
+        vehiculo.mover(dt)
+        return
+      }
+      vehiculo.frenar(dt)
+      
+    }else{
+       vehiculo.mover(dt) 
+    }
+    
   }
   
   def llegoADestino():Boolean={

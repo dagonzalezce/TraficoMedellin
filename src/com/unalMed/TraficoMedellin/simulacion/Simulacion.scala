@@ -69,11 +69,13 @@ object Simulacion extends Runnable{
   
     def run(){
     estado = false
+    
     while (true) {
+      
       if( estado ){
         viajes.foreach(_.avanzar(dt))
         nodosSemaforos.foreach(_.controlarFlujo(dt))
-                
+        
         t += dt
         Grafico.graficarVehiculos(viajes)
         Thread.sleep(tRefresh)
@@ -82,7 +84,7 @@ object Simulacion extends Runnable{
         viajes.foreach(x=> if(!x.llegoADestino()) llegaronTodos=false)
         if(llegaronTodos && !vehiculos.isEmpty) ArchivosJson.escribirArchivo(ResultadosSimulacion())
       }
-      println(estado) //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
+      print("") //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
      }
     
   }

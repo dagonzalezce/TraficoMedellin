@@ -141,7 +141,7 @@ object Conexion {
       
     }
     session.close()
-    driver.close()
+    driver.close() 
     viajes
   }
   

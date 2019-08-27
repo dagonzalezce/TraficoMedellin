@@ -20,7 +20,16 @@ trait MovimientoUniformeAcelerado {
     if (_velocidadAct.magnitud>_velocidadMax.magnitud){
       _velocidadAct.magnitud=_velocidadMax.magnitud
           
-    } else if ((_velocidadAct.magnitud<0)) {
+    } 
+    _posicion.x = ( _posicion.x.toDouble + _velocidadAct.magnitud * math.cos( _velocidadAct.angulo.angulo.toRadians ) * dt ).toInt
+     _posicion.y = ( _posicion.y.toDouble + _velocidadAct.magnitud * math.sin( _velocidadAct.angulo.angulo.toRadians ) * dt ).toInt
+  }
+  
+  def moverUniformementeDesacelerado( dt:Int = 1): Unit = {
+    
+    _velocidadAct.magnitud = _velocidadAct.magnitud - _aceleracion.magnitud
+    
+    if ((_velocidadAct.magnitud<0)) {
       _velocidadAct.magnitud = 0
     }
     

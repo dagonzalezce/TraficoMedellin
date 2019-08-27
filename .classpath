@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="jcommon-1.0.23.jar"/>
 	<classpathentry kind="lib" path="jfreechart-1.0.19.jar"/>
 	<classpathentry kind="lib" path="graph-core_2.12-1.12.5.1.jar"/>
+	<classpathentry kind="lib" path="neo4j-java-driver-1.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
