@@ -42,7 +42,7 @@ class Viaje (val interseccionOrigen: Interseccion, val interseccionDestino: Inte
         return
       }
     }
-    vehiculo.velocidad.angulo= new Angulo(vehiculo.posicion.calcularAnguloA(siguienteInterseccion))
+    vehiculo.velocidadMax.angulo= new Angulo(vehiculo.posicion.calcularAnguloA(siguienteInterseccion))
     vehiculo.mover(dt)
   }
   
@@ -53,7 +53,7 @@ class Viaje (val interseccionOrigen: Interseccion, val interseccionDestino: Inte
   def cercaDeInterseccion(interseccion: Interseccion, dt:Int): Boolean={
     var distancia= Math.sqrt(Math.pow((vehiculo.posicion.x - interseccion.x),2) + Math.pow((vehiculo.posicion.y - interseccion.y),2))
     distancia = Math.abs(distancia)
-    (distancia <= vehiculo.velocidad.magnitud*dt)
+    (distancia <= vehiculo.velocidadMax.magnitud*dt)
   }
   
   def calcularDistanciaARecorrer(): Double={
