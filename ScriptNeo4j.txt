@@ -158,7 +158,7 @@ CREATE (unsentido: Sentido {nombre: 'UnaVia'}),
 
 	(v28:Via {velMax:60, numero:'450', nombre:'Colombia'}),
 	(v28)-[:TIENE_SENTIDO]->(doblesentido), (v28)-[:ES_TIPO_VIA]->(TipoCalle),
-	(v28)-[:INICIA_EN]->(ferreCol), (v28)-[:TERMINA_EN]->(colReg),
+	(v28)-[:INICIA_EN]->(ferrCol), (v28)-[:TERMINA_EN]->(colReg),
 
 	(v29:Via {velMax:60, numero:'450', nombre:'Colombia'}),
 	(v29)-[:TIENE_SENTIDO]->(doblesentido), (v29)-[:ES_TIPO_VIA]->(TipoCalle),
@@ -330,7 +330,25 @@ CREATE (unsentido: Sentido {nombre: 'UnaVia'}),
 
 	(v71:Via {velMax:60, numero:'63', nombre:'37S'}),
 	(v71)-[:TIENE_SENTIDO]->(doblesentido), (v71)-[:ES_TIPO_VIA]->(TipoCalle),
-	(v71)-[:INICIA_EN]->(viva), (v71)-[:TERMINA_EN]->(gu_37S)
+	(v71)-[:INICIA_EN]->(viva), (v71)-[:TERMINA_EN]->(gu_37S),
+	
+	(C1:CamaraFotoMulta {distanciaOrigen: 200}),
+	(C2:CamaraFotoMulta {distanciaOrigen: 200}),
+	(C3:CamaraFotoMulta {distanciaOrigen: 200}),
+	(C4:CamaraFotoMulta {distanciaOrigen: 200}),
+	(C5:CamaraFotoMulta {distanciaOrigen: 200}),
+	(C6:CamaraFotoMulta {distanciaOrigen: 200}),
+	(C7:CamaraFotoMulta {distanciaOrigen: 200}),
+	(C8:CamaraFotoMulta {distanciaOrigen: 200}),
+	
+	(c1)-[:ESTA_UBICADA_EN]->(v11),
+	(c2)-[:ESTA_UBICADA_EN]->(v22),	
+	(c3)-[:ESTA_UBICADA_EN]->(v33),
+	(c4)-[:ESTA_UBICADA_EN]->(v44),
+	(c5)-[:ESTA_UBICADA_EN]->(v55),
+	(c6)-[:ESTA_UBICADA_EN]->(v66),
+	(c7)-[:ESTA_UBICADA_EN]->(v70),
+	(c8)-[:ESTA_UBICADA_EN]->(v8)
 
 
 
