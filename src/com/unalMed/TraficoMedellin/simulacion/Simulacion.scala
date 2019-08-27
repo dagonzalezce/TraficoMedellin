@@ -64,7 +64,7 @@ object Simulacion extends Runnable{
   GrafoVia.construir(vias)
   Grafico.graficarVias(vias.toArray)
  
-   var vehiculos: Array[Vehiculo] = Array()
+   var vehiculos: ArrayBuffer[Vehiculo] = ArrayBuffer[Vehiculo]()
    var viajes = ArrayBuffer[Viaje]()
   
     def run(){
@@ -85,7 +85,12 @@ object Simulacion extends Runnable{
         if(llegaronTodos && !vehiculos.isEmpty) ArchivosJson.escribirArchivo(ResultadosSimulacion())
       }
       print("") //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
+<<<<<<< HEAD
      }
+=======
+      
+    }
+>>>>>>> 97ef839906bbb2a0b2edd8b1f0e80273d6ef146a
     
   }
 
@@ -95,10 +100,22 @@ object Simulacion extends Runnable{
   def reiniciar{
     t=0
     tiempoInicio= System.currentTimeMillis()
-    vehiculos = Array()
+    vehiculos = ArrayBuffer[Vehiculo]()
     viajes.clear()
     vehiculos = crearVehiculos
     continuar
+  }
+  
+  def iniciarDeNeo4J{
+    pausar
+    t=0
+    tiempoInicio= System.currentTimeMillis()
+    vehiculos = ArrayBuffer[Vehiculo]()
+    viajes.clear()
+    vehiculos = Conexion.getVehiculos()
+    viajes = Conexion.getViajes()
+    print(vehiculos)
+    continuar    
   }
   
   def pausar: Unit = {
@@ -110,13 +127,13 @@ object Simulacion extends Runnable{
   }
   
   
-  def crearVehiculos() : Array[Vehiculo] = {
+  def crearVehiculos() : ArrayBuffer[Vehiculo] = {
     
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
-    val array= new Array[Vehiculo](size)
+    val array= new ArrayBuffer[Vehiculo]()
     for(i <- 0 to size-1) {
       var veh= Vehiculo()
-      array(i)= veh
+      array+= veh
       viajes+= Viaje(veh)
     }
     array

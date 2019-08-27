@@ -8,13 +8,14 @@ import com.unalMed.TraficoMedellin.movil.Moto
 import scala.collection.mutable.ArrayBuffer
 import com.unalMed.TraficoMedellin.geometria.Velocidad
 
-case class Resultados (vehiculos: RVehiculos, mallaVial: RMallaVial,tiempos: RTiempos, velocidades: RVelocidades, distancias: RDistancias)
+case class Resultados (vehiculos: RVehiculos, mallaVial: RMallaVial,tiempos: RTiempos, velocidades: RVelocidades, distancias: RDistancias, comparendos: RComparendos)
 case class RVehiculos (total: Int , carros: Int, motos: Int, buses: Int, camiones: Int, motoTaxis:Int)
 case class RMallaVial (vias: Int, intersecciones:Int, viasUnSentido: Int, viasDobleSentido: Int, velocidadMinima: Double, velocidadMaxima: Double, longitudPromedio: Double, vehiculosEnInterseccion: RVehiculosEnInterseccion)
 case class RVehiculosEnInterseccion (promedioOrigen: Double, promedioDestino: Double, sinOrigen: Int, sinDestino: Int)
 case class RTiempos (simulacion: Double, realidad: Double)
 case class RVelocidades (minima: Double, maxima: Double, promedio: Double)
 case class RDistancias (minima: Double, maxima: Double, promedio: Double)
+case class RComparendos(cantidad: Int, promedioPorcentajeExceso: Double)
 
 case class ResultadosSimulacion(resultadosSimulacion: Resultados) 
 
@@ -48,7 +49,9 @@ object ResultadosSimulacion{
                         totalBuses,
                         totalCamiones,
                         totalMotoTaxis)
-    var res= Resultados(veh, mallaV, tiempos, vel, dis)
+    var comp= RComparendos(totalComparendos,
+                        promedioVelocidadExcedida)
+    var res= Resultados(veh, mallaV, tiempos, vel, dis, comp)
     ResultadosSimulacion(res)
   }
   
@@ -144,4 +147,12 @@ object ResultadosSimulacion{
   def totalCamiones(): Int= Simulacion.vehiculos.filter(_.isInstanceOf[Camion]).size
   def totalMotoTaxis(): Int= Simulacion.vehiculos.filter(_.isInstanceOf[MotoTaxi]).size
   
+  def totalComparendos(): Int= Simulacion.listaComparendos.size
+  def promedioVelocidadExcedida(): Double={
+    var prom=0.0
+    if(totalComparendos>0){
+      prom=Simulacion.listaComparendos.map(_.excesoPorcentaje).reduce(_+_)/totalComparendos
+    }
+    prom
+  }
 }

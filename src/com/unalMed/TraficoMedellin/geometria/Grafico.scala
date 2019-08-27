@@ -14,6 +14,7 @@ import org.jfree.chart.annotations.XYTextAnnotation
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 import com.unalMed.TraficoMedellin.simulacion.Simulacion
+import com.unalMed.TraficoMedellin.simulacion.Conexion
 
 
 /*
@@ -80,6 +81,14 @@ object Grafico {
                                else{
                                  s.continuar
                                }
+                             }
+                             if(e.getKeyCode == KeyEvent.VK_F2){
+                               s.pausar
+                               Conexion.guardarDatos()
+                               
+                             }
+                             if(e.getKeyCode == KeyEvent.VK_F1){
+                               s.iniciarDeNeo4J
                              }
                            }
                            override def keyTyped( e : KeyEvent ): Unit = {

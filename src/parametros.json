@@ -3,8 +3,8 @@
 "dt": 10,
 "tRefresh": 120,
 "vehiculos": {
-"minimo": 50,
-"maximo": 100
+"minimo": 10,
+"maximo": 20
 },
 "velocidad": {
 "minimo": 40,

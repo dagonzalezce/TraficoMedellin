@@ -1,4 +1,4 @@
-package com.unalMed.TraficoMedellin.movil
+package com.unalMed.TraficoMedellin.geometria
 
 import com.unalMed.TraficoMedellin.geometria._
 
