@@ -4,7 +4,7 @@ import com.unalMed.TraficoMedellin.movil._
 import com.unalMed.TraficoMedellin.simulacion.Simulacion
 import com.unalMed.TraficoMedellin.geometria.Punto
 
-class CamaraFotoDeteccion (val via:Via, distanciaOrigen: Double, val ubicacion: Punto){
+class CamaraFotoDeteccion (val via:Via, distanciaOrigen: Double){
   
     
   def medidorVelocidad (vehiculo:Vehiculo, velocidad: Double) {

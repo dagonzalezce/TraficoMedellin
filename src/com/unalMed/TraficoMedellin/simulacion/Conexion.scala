@@ -18,6 +18,7 @@ import com.unalMed.TraficoMedellin.movil.Viaje
 import com.unalMed.TraficoMedellin.geometria.GrafoVia
 import com.unalMed.TraficoMedellin.vias.Sentido
 import com.unalMed.TraficoMedellin.vias.TipoVia
+import com.unalMed.TraficoMedellin.vias.CamaraFotoDeteccion
 
 
 object Conexion {
@@ -166,6 +167,31 @@ object Conexion {
   
   def getVia(pOrigen: Punto, pDestino: Punto):Via={
     Simulacion.vias.filter(x=> x.origen==pOrigen && x.fin==pDestino)(0)
+  }
+  
+  def getCamara(): ArrayBuffer[CamaraFotoDeteccion] ={
+    val (driver, session) = getSession()
+    val script = s"""MATCH (c:CamaraFotoMulta), 
+                      (c)-[:ESTA_UBICADA_EN]->(via:Via),
+                       (via)-[:INICIA_EN]->(io:Interseccion),
+                      (via)-[:TERMINA_EN]->(id:Interseccion)
+                    RETURN c, io, id """
+    
+    val result = session.run(script)
+    val camaras = ArrayBuffer.empty[CamaraFotoDeteccion]
+    while (result.hasNext()) {
+      val values = result.next().values()
+      val nodo = values.get(0) //Nodo 0 del return
+      val nodo1 = values.get(1)
+      val nodo2 = values.get(2)
+      val io:Interseccion=Simulacion.intersecciones.filter(x=> x==Punto(nodo1.get("cx").asInt, nodo1.get("cy").asInt))(0)
+      val id:Interseccion=Simulacion.intersecciones.filter(x=> x==Punto(nodo2.get("cx").asInt, nodo2.get("cy").asInt))(0)
+      val via= getVia(io, id)
+      camaras+=new CamaraFotoDeteccion(via, nodo.get("distanciaOrigen").asInt)
+      }
+    session.close()
+    driver.close()
+    camaras   
   }
   def insertarViajes()={
     val (driver, session) = getSession()
