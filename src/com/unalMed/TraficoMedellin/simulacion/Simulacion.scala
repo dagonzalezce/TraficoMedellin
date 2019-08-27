@@ -37,6 +37,7 @@ object Simulacion extends Runnable{
 
   val intersecciones = Conexion.getIntersecciones()
   val vias = Conexion.getVias()
+  val camaras = Conexion.getCamara()
   val listaComparendos:ArrayBuffer[Comparendo]=ArrayBuffer[Comparendo]()  // aun no he creado fotomultas :(
 
   val semaforos = ArrayBuffer[Semaforo]()
@@ -63,6 +64,7 @@ object Simulacion extends Runnable{
   
   GrafoVia.construir(vias)
   Grafico.graficarVias(vias.toArray)
+  Grafico.graficarCamarasFotoMultas(camaras)
  
    var vehiculos: ArrayBuffer[Vehiculo] = ArrayBuffer[Vehiculo]()
    var viajes = ArrayBuffer[Viaje]()
