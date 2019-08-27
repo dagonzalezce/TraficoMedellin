@@ -158,7 +158,7 @@ CREATE (unsentido: Sentido {nombre: 'UnaVia'}),
 
 	(v28:Via {velMax:60, numero:'450', nombre:'Colombia'}),
 	(v28)-[:TIENE_SENTIDO]->(doblesentido), (v28)-[:ES_TIPO_VIA]->(TipoCalle),
-	(v28)-[:INICIA_EN]->(ferreCol), (v28)-[:TERMINA_EN]->(colReg),
+	(v28)-[:INICIA_EN]->(ferrCol), (v28)-[:TERMINA_EN]->(colReg),
 
 	(v29:Via {velMax:60, numero:'450', nombre:'Colombia'}),
 	(v29)-[:TIENE_SENTIDO]->(doblesentido), (v29)-[:ES_TIPO_VIA]->(TipoCalle),
