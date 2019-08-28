@@ -19,6 +19,7 @@ import com.unalMed.TraficoMedellin.geometria.GrafoVia
 import com.unalMed.TraficoMedellin.vias.Sentido
 import com.unalMed.TraficoMedellin.vias.TipoVia
 import com.unalMed.TraficoMedellin.vias.CamaraFotoDeteccion
+import com.unalMed.TraficoMedellin.movil.Comparendo
 
 
 object Conexion {
@@ -36,6 +37,8 @@ object Conexion {
     borrarDatos()
     insertarVehiculos()
     insertarViajes()
+    insertarComparendos()
+    println("Datos guardados")
   }
   
   def borrarDatos(){
@@ -44,7 +47,9 @@ object Conexion {
                 match (v2:Vehiculo)
                 match (vi:Viaje)-[r2]-()
                 match (vi2:Viaje)
-                delete r,r2,v2,vi2""" 
+                match (co:Comparendo)-[r3]-()
+                match (co2:Comparendo)
+                delete r,r2,r3,v2,vi2, co2""" 
     var result = session.run(script)
     session.close()
     driver.close()
@@ -127,6 +132,7 @@ object Conexion {
     driver.close()
     vehiculos  
   }
+
   def getViajes(): ArrayBuffer[Viaje]={
     val (driver, session) = getSession()
     val script = s"""MATCH (v:Viaje), 
@@ -164,7 +170,31 @@ object Conexion {
     driver.close() 
     viajes
   }
-  
+  def getComparendos(): ArrayBuffer[Comparendo]={
+    val (driver, session) = getSession()
+    val script = s"""MATCH (c:Comparendo), 
+                      (c)-[:A_VEHICULO]->(ve:Vehiculo),
+                      (c)-[:EN_VIA]->(via: Via)-[:INICIA_EN]->(ioVia:Interseccion),
+                      (via)-[:TERMINA_EN]->(idVia:Interseccion)
+                      RETURN c,ve,ioVia, idVia"""
+    val result = session.run(script)
+    val comparendos = ArrayBuffer.empty[Comparendo]
+    while (result.hasNext()) {
+      val values = result.next().values()
+      val nodo = values.get(0) //Nodo 0 del return
+      val nodo1 = values.get(1)
+      val nodo2= values.get(2)
+      val nodo3= values.get(3)
+      val veh:Vehiculo=Simulacion.vehiculos.filter(_.placa==nodo1.get("placa").asString())(0)
+      val io:Interseccion=Simulacion.intersecciones.filter(x=> x==Punto(nodo2.get("cx").asInt, nodo2.get("cy").asInt))(0)
+      val id:Interseccion=Simulacion.intersecciones.filter(x=> x==Punto(nodo3.get("cx").asInt, nodo3.get("cy").asInt))(0)
+      var via= getVia(io,id)
+      comparendos+=new Comparendo(veh, nodo.get("velVehiculo").asDouble, nodo.get("maxVelocidad").asDouble, via)
+       }
+    session.close()
+    driver.close() 
+    comparendos
+  }
   def getVia(pOrigen: Punto, pDestino: Punto):Via={
     Simulacion.vias.filter(x=> x.origen==pOrigen && x.fin==pDestino)(0)
   }
@@ -187,7 +217,9 @@ object Conexion {
       val io:Interseccion=Simulacion.intersecciones.filter(x=> x==Punto(nodo1.get("cx").asInt, nodo1.get("cy").asInt))(0)
       val id:Interseccion=Simulacion.intersecciones.filter(x=> x==Punto(nodo2.get("cx").asInt, nodo2.get("cy").asInt))(0)
       val via= getVia(io, id)
-      camaras+=new CamaraFotoDeteccion(via, nodo.get("distanciaOrigen").asInt)
+      val camara=new CamaraFotoDeteccion(via, nodo.get("distanciaOrigen").asInt)
+      camaras+=camara
+      via.fotoDeteccion= Some(camara)
       }
     session.close()
     driver.close()
@@ -234,5 +266,20 @@ object Conexion {
     driver.close()
   }
   
+  def insertarComparendos()={
+    val (driver, session) = getSession()
+    Simulacion.listaComparendos.foreach(c=>{
+    var script = s"""MATCH (ve: Vehiculo{placa: '${c.vehiculo.placa}'})
+                     MATCH (via: Via)-[:INICIA_EN]->(:Interseccion{cx:${c.via.origen.x}, cy:${c.via.origen.y}}) 
+                     MATCH (via)-[:TERMINA_EN]->(:Interseccion{cx:${c.via.fin.x}, cy:${c.via.fin.y}})                        
+                     CREATE (comp:Comparendo{velVehiculo:${c.velVehiculo}, maxVelocidad:${c.maxVelocidad} }),
+                     (comp)-[:A_VEHICULO]->(ve),
+                     (comp)-[:EN_VIA]->(via)
+                     """                     
+    var result = session.run(script)})
+    session.close()
+    driver.close()
+  }
+    
   
 }

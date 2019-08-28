@@ -87,10 +87,10 @@ object Grafico {
                              if(e.getKeyCode == KeyEvent.VK_F2){
                                s.pausar
                                Conexion.guardarDatos()
-                               
                              }
                              if(e.getKeyCode == KeyEvent.VK_F1){
-                               s.iniciarDeNeo4J
+                               s.iniciarDeNeo4J                               
+                            	 _actualKey = _numeroVias + _numeroCamaras
                              }
                            }
                            override def keyTyped( e : KeyEvent ): Unit = {
@@ -141,8 +141,7 @@ object Grafico {
       _mapColores.+=( interseccion.nombre.get -> java.awt.Color.getHSBColor(Random.nextFloat()*100f+100f,
                                                                  Random.nextFloat()*100f+100f,
                                                                  Random.nextFloat()*100f+100f) )
-                                                                 
-    		  println("ward")
+         
       //Agrega anotaciones a la via
       var _annotation = new XYTextAnnotation( interseccion.nombre.getOrElse(""), interseccion.x, interseccion.y  ) 
       _annotation.setPaint( _mapColores.get(interseccion.nombre.get).getOrElse(java.awt.Color.BLACK) )
@@ -153,7 +152,6 @@ object Grafico {
       //sP.getXYPlot.getAnnotations.get(_viaActual).asInstanceOf[XYTextAnnotation].setPaint(_mapColores.get(interseccion).getOrElse(java.awt.Color.BLACK)) 
      })
     _actualKey = _numeroVias + _numeroCamaras
-    println( _mapColores.mkString(",") )
     return
   }
   
@@ -185,8 +183,6 @@ object Grafico {
     camaras.foreach(camara =>{
       var s = new XYSeries(cont)
       s.add(camara.calcularUbicacion().x, camara.calcularUbicacion().y)
-      print("ubicacion : "+camara.calcularUbicacion())
-      print("VIA : "+  camara.via.calcularAnguloRecta().toRadians)
      _dataset.addSeries(s) 
      r.setSeriesPaint(cont, java.awt.Color.BLUE)
      r.setSeriesShape(cont, org.jfree.util.ShapeUtilities.createRegularCross(0, 5f))

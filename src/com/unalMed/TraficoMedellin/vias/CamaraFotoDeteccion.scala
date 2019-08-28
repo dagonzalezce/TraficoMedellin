@@ -7,12 +7,21 @@ import com.unalMed.TraficoMedellin.geometria.Punto
 class CamaraFotoDeteccion (val via:Via, distanciaOrigen: Double){
   
     
-  def medidorVelocidad (vehiculo:Vehiculo, velocidad: Double) {
+  def medirVelocidad (dt:Int) {
     
-    if (velocidad > via.velMax){
-      val comparendo = new Comparendo(vehiculo, velocidad, via.velMax)
-      Simulacion.listaComparendos += comparendo        
-    }    
+    val vehiculos = Simulacion.viajes.filter(_.viaActual==via).map(_.vehiculo)
+    
+    vehiculos.foreach(x=>if(vehiculoCercaDeCamara(x, dt)){
+         if (x.velocidadAct.magnitud > 0){
+        val comparendo = new Comparendo(x, x.velocidadAct.magnitud, via.velMax, via)
+        if(Simulacion.listaComparendos.filter(_.vehiculo.placa==x.placa).filter(_.via==via)
+            .isEmpty){
+        Simulacion.listaComparendos += comparendo    }
+        }
+      } 
+    )
+    
+        
   } 
   
    def calcularUbicacion(): Punto = { 
@@ -23,5 +32,11 @@ class CamaraFotoDeteccion (val via:Via, distanciaOrigen: Double){
     val x = via.origen.x+(distanciaOrigen*Math.cos(angulo)).toInt
     Punto(x, y)
      
+  }
+  
+   def vehiculoCercaDeCamara(vehiculo:Vehiculo, dt:Int): Boolean={
+    var distancia= Math.sqrt(Math.pow((vehiculo.posicion.x - calcularUbicacion.x),2) + Math.pow((vehiculo.posicion.y - calcularUbicacion.y),2))
+    distancia = Math.abs(distancia)
+    (distancia <= vehiculo.velocidadMax.magnitud*dt)
   }
 }

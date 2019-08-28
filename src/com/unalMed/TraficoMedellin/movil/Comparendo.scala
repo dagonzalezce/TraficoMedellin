@@ -1,10 +1,12 @@
 package com.unalMed.TraficoMedellin.movil
 import com.unalMed.TraficoMedellin.movil._
+import com.unalMed.TraficoMedellin.vias.Via
 
-class Comparendo(vehiculo: Vehiculo, velVehiculo: Double, maxVelocidad: Double) {
+class Comparendo(val vehiculo: Vehiculo, val velVehiculo: Double, val maxVelocidad: Double, val via:Via) {
+
   
   def excesoPorcentaje :Double = {
-    (velVehiculo/maxVelocidad)*100
+    ((velVehiculo-maxVelocidad)/maxVelocidad)*100
     
     }
   

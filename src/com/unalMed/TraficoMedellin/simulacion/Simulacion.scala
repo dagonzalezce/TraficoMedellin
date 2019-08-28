@@ -38,12 +38,11 @@ object Simulacion extends Runnable{
   val intersecciones = Conexion.getIntersecciones()
   val vias = Conexion.getVias()
   val camaras = Conexion.getCamara()
-  val listaComparendos:ArrayBuffer[Comparendo]=ArrayBuffer[Comparendo]()  // aun no he creado fotomultas :(
+  var listaComparendos:ArrayBuffer[Comparendo]=ArrayBuffer[Comparendo]()  // aun no he creado fotomultas :(
 
   val semaforos = ArrayBuffer[Semaforo]()
   vias.foreach(x=>{
           val tiempoVerde= minTiempoVerde+Random.nextInt(maxTiempoVerde-minTiempoVerde)
-          print(tiempoVerde)
           semaforos+= new Semaforo(tiempoVerde,tiempoAmarillo,x,x.puntoFinal)
           if(x.sentido.nombre == "dobleVia" ){
             val tiempoVerde2= minTiempoVerde+Random.nextInt(maxTiempoVerde-minTiempoVerde)
@@ -77,6 +76,7 @@ object Simulacion extends Runnable{
       if( estado ){
         viajes.foreach(_.avanzar(dt))
         nodosSemaforos.foreach(_.controlarFlujo(dt))
+        camaras.foreach(_.medirVelocidad(dt))
         
         t += dt
         Grafico.graficarVehiculos(viajes)
@@ -101,6 +101,7 @@ object Simulacion extends Runnable{
     tiempoInicio= System.currentTimeMillis()
     vehiculos = ArrayBuffer[Vehiculo]()
     viajes.clear()
+    listaComparendos.clear()
     vehiculos = crearVehiculos
     continuar
   }
@@ -111,9 +112,9 @@ object Simulacion extends Runnable{
     tiempoInicio= System.currentTimeMillis()
     vehiculos = ArrayBuffer[Vehiculo]()
     viajes.clear()
+    listaComparendos.clear()
     vehiculos = Conexion.getVehiculos()
     viajes = Conexion.getViajes()
-    print(vehiculos)
     continuar    
   }
   
@@ -129,7 +130,7 @@ object Simulacion extends Runnable{
   def crearVehiculos() : ArrayBuffer[Vehiculo] = {
     
     val size= minVehiculos+Random.nextInt(maxVehiculos-minVehiculos)
-    val array= new ArrayBuffer[Vehiculo]()
+   val array= new ArrayBuffer[Vehiculo]()
     for(i <- 0 to size-1) {
       var veh= Vehiculo()
       array+= veh

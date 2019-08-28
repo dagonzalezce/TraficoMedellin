@@ -7,7 +7,7 @@ import scala.reflect.ManifestFactory.classType
 import net.liftweb.json.Serialization.write
 
 object ArchivosJson {
-  val ruta = "C:\\Users\\SERGIO\\git\\TraficoMedellin\\src\\"
+  val ruta = "C:\\Users\\admin\\eclipse-workspace\\TraficoMedellin\\src\\"
   val archivo = "parametros.json"
   val archivo2 = "resultados.json" //archivo resultados simulacion
   implicit val formats = DefaultFormats
