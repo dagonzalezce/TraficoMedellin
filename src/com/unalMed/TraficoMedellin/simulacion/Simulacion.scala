@@ -115,6 +115,7 @@ object Simulacion extends Runnable{
     listaComparendos.clear()
     vehiculos = Conexion.getVehiculos()
     viajes = Conexion.getViajes()
+    listaComparendos= Conexion.getComparendos()
     continuar    
   }
   

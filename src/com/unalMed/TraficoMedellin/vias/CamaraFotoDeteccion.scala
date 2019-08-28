@@ -12,7 +12,7 @@ class CamaraFotoDeteccion (val via:Via, distanciaOrigen: Double){
     val vehiculos = Simulacion.viajes.filter(_.viaActual==via).map(_.vehiculo)
     
     vehiculos.foreach(x=>if(vehiculoCercaDeCamara(x, dt)){
-         if (x.velocidadAct.magnitud > 0){
+         if (x.velocidadAct.magnitud > via.velMax){
         val comparendo = new Comparendo(x, x.velocidadAct.magnitud, via.velMax, via)
         if(Simulacion.listaComparendos.filter(_.vehiculo.placa==x.placa).filter(_.via==via)
             .isEmpty){
