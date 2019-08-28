@@ -17,6 +17,10 @@ abstract case class Vehiculo (val ve: Velocidad, val acel: Aceleracion)
   def mover(dt: Int){
     moverUniformementeAcelerado(dt)
   } 
+  
+  def frenar(dt: Int){
+    moverUniformementeDesacelerado(dt)
+  }
 }
 
 
@@ -24,7 +28,7 @@ object Vehiculo{
   def apply(): Vehiculo = {
        
     val magnVel: Int= Simulacion.minVelocidad+Random.nextInt(Simulacion.maxVelocidad-Simulacion.minVelocidad)
-    val magnAcel: Int= Simulacion.minAceleracion+Random.nextInt(Simulacion.maxAceleracion-Simulacion.minAceleracion)
+    val magnAcel: Double= (Simulacion.minAceleracion+Random.nextInt(Simulacion.maxAceleracion-Simulacion.minAceleracion))/10.0
     val v= new Velocidad(Velocidad.aMetrosPorSegundo(magnVel), new Angulo(0)) 
     val a = new Aceleracion(magnAcel)
     val r = Random.nextDouble()	   

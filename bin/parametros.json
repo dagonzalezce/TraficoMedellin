@@ -24,11 +24,11 @@
 },
 "aceleracion": { 
 "minimo": 5,
-"maximo": 20 
+"maximo": 10 
 },
 "distanciasFrenadoVehiculos": {
-"XSemaforoFrenar": 40,
-"XSemaforoAmarilloContinuar": 20
+"XSemaforoFrenar": 400,
+"XSemaforoAmarilloContinuar": 200
 }
 }
 }

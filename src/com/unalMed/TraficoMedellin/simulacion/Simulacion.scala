@@ -37,6 +37,7 @@ object Simulacion extends Runnable{
 
   val intersecciones = Conexion.getIntersecciones()
   val vias = Conexion.getVias()
+  val camaras = Conexion.getCamara()
   val listaComparendos:ArrayBuffer[Comparendo]=ArrayBuffer[Comparendo]()  // aun no he creado fotomultas :(
 
   val semaforos = ArrayBuffer[Semaforo]()
@@ -63,17 +64,20 @@ object Simulacion extends Runnable{
   
   GrafoVia.construir(vias)
   Grafico.graficarVias(vias.toArray)
+  Grafico.graficarCamarasFotoMultas(camaras)
  
    var vehiculos: ArrayBuffer[Vehiculo] = ArrayBuffer[Vehiculo]()
    var viajes = ArrayBuffer[Viaje]()
   
     def run(){
     estado = false
+    
     while (true) {
+      
       if( estado ){
         viajes.foreach(_.avanzar(dt))
         nodosSemaforos.foreach(_.controlarFlujo(dt))
-                
+        
         t += dt
         Grafico.graficarVehiculos(viajes)
         Thread.sleep(tRefresh)
@@ -83,6 +87,7 @@ object Simulacion extends Runnable{
         if(llegaronTodos && !vehiculos.isEmpty) ArchivosJson.escribirArchivo(ResultadosSimulacion())
       }
       print("") //No me borres, por que rompe pausar, dios sabe por que, preguntarle pls
+
       
     }
     
